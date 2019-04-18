@@ -20,7 +20,9 @@ signals:
 public slots:
 
 private:
+    void setWindowSize();
     void setUI();
+
     QLayout         *_loutMain;
     QGroupBox           *_gbImgL;
     QVBoxLayout             *_loutImgL;

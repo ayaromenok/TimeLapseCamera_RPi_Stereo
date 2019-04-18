@@ -5,7 +5,7 @@
 YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
-    this->setGeometry(100,100,854,480);
+    setWindowSize();
     setUI();
 }
 
@@ -13,7 +13,18 @@ YaStereoWidget::~YaStereoWidget()
 {
     qInfo() << __PRETTY_FUNCTION__;
 }
+void
+YaStereoWidget::setWindowSize()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+#ifdef DEBUG_RPI_V7L
+    this->setGeometry(QGuiApplication::primaryScreen()->geometry());
+#endif //DEBUG_RPI_V7L
 
+#ifdef DEBUG_PC
+    this->setGeometry(100,100,854,480);
+#endif //DEBUG_PC
+}
 void
 YaStereoWidget::setUI()
 {

@@ -3,7 +3,6 @@
 # https://raw.githubusercontent.com/ayaromenok/TimeLapseCamera_Stereo/master/LICENSE
 
 QT       += core gui widgets
-QT       += multimedia multimediawidgets
 
 TARGET = TimeLaspeCamera
 

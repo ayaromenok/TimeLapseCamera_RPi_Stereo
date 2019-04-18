@@ -12,9 +12,11 @@ CONFIG += c++11
 
 SOURCES += \
         src/main.cpp \
+        src/yastereocam.cpp \
         src/yastereowidget.cpp
 
 HEADERS += \
+        src/yastereocam.h \
         src/yastereowidget.h
 
 # Default rules for deployment.

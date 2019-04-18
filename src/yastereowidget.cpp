@@ -1,4 +1,5 @@
 #include "yastereowidget.h"
+#include "yastereocam.h"
 #include <QDebug>
 #include <QtWidgets>
 
@@ -10,6 +11,9 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
     _timer->start(1000); //tets time: 1000msec
+
+    _cam = new YaStereoCam(this);
+    connect(_timer, SIGNAL(timeout()), _cam, SLOT(getImage()));
 }
 
 YaStereoWidget::~YaStereoWidget()

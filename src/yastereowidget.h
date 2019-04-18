@@ -9,6 +9,7 @@ class QLabel;
 class QPushButton;
 class QImage;
 class QTimer;
+class YaStereoCam;
 
 class YaStereoWidget : public QWidget
 {
@@ -42,6 +43,7 @@ private:
     QPushButton                 *_pbCtrlQuit;
 
     QTimer          *_timer;
+    YaStereoCam     *_cam;
 };
 
 #endif // YASTEREOWIDGET_H

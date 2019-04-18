@@ -4,11 +4,15 @@
 
 #include <QApplication>
 #include <QDebug>
+#include "yastereowidget.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     qInfo() << "TimeLapse Camera for Stereo";
+    YaStereoWidget sw;
+
+    sw.show();
 
     return a.exec();
 }

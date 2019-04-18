@@ -13,8 +13,10 @@ CONFIG += c++11
 
 SOURCES += \
         src/main.cpp \
+        src/yastereowidget.cpp
 
 HEADERS += \
+        src/yastereowidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -48,3 +50,6 @@ equals(QMAKE_HOST.os, Linux) {
         message("        arch: RPi3/aarch64")
     }
 }
+
+#RESOURCES += \
+#    res/res.qrc

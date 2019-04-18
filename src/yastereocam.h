@@ -3,6 +3,11 @@
 
 #include <QObject>
 
+namespace cv {
+    class Mat;
+    class VideoCapture;
+}
+
 class YaStereoCam : public QObject
 {
     Q_OBJECT
@@ -14,8 +19,13 @@ signals:
 
 public slots:
     void getImage();
+
 private:
 
+    cv::VideoCapture    *_capL;
+    cv::VideoCapture    *_capR;
+    cv::Mat             *_imgInL;
+    cv::Mat             *_imgInR;
 };
 
 #endif // YASTEREOCAM_H

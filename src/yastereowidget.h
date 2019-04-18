@@ -8,6 +8,7 @@ class QGroupBox;
 class QLabel;
 class QPushButton;
 class QImage;
+class QTimer;
 
 class YaStereoWidget : public QWidget
 {
@@ -15,9 +16,11 @@ class YaStereoWidget : public QWidget
 public:
     explicit YaStereoWidget(QWidget *parent = nullptr);
     ~YaStereoWidget();
+
 signals:
 
 public slots:
+    void timerUpdate();
 
 private:
     void setWindowSize();
@@ -38,6 +41,7 @@ private:
     QLabel                      *_lbCtrl;
     QPushButton                 *_pbCtrlQuit;
 
+    QTimer          *_timer;
 };
 
 #endif // YASTEREOWIDGET_H

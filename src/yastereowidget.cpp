@@ -7,12 +7,23 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     qInfo() << __PRETTY_FUNCTION__;
     setWindowSize();
     setUI();
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+    _timer->start(1000); //tets time: 1000msec
 }
 
 YaStereoWidget::~YaStereoWidget()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    _timer->stop();
 }
+
+void
+YaStereoWidget::timerUpdate()
+{
+    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+}
+
 void
 YaStereoWidget::setWindowSize()
 {
@@ -25,6 +36,7 @@ YaStereoWidget::setWindowSize()
     this->setGeometry(100,100,854,480);
 #endif //DEBUG_PC
 }
+
 void
 YaStereoWidget::setUI()
 {

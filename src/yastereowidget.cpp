@@ -23,7 +23,7 @@ YaStereoWidget::setUI()
     _gbImgL = new QGroupBox(tr("Image/Left"));
     _lbImgL = new QLabel("Image/Left");
     _imgL = new QImage(":/test/imgCam13L.jpg");
-    _lbImgL->setPixmap(QPixmap::fromImage(*_imgL).scaled(320,240));
+    _lbImgL->setPixmap(QPixmap::fromImage(*_imgL).scaled(this->width()/3,this->width()/4));
     _loutImgL = new QVBoxLayout();
     _loutImgL->addWidget(_lbImgL);
     _gbImgL->setLayout(_loutImgL);
@@ -31,7 +31,7 @@ YaStereoWidget::setUI()
     _gbImgR = new QGroupBox(tr("Image/Right"));
     _lbImgR = new QLabel("Image/Right");
     _imgR = new QImage(":/test/imgCam13R.jpg");
-    _lbImgR->setPixmap(QPixmap::fromImage(*_imgR).scaled(320,240));
+    _lbImgR->setPixmap(QPixmap::fromImage(*_imgR).scaled(this->width()/3,this->width()/4));
     _loutImgR = new QVBoxLayout();
     _loutImgR->addWidget(_lbImgR);
     _gbImgR->setLayout(_loutImgR);

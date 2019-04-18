@@ -51,5 +51,5 @@ equals(QMAKE_HOST.os, Linux) {
     }
 }
 
-#RESOURCES += \
-#    res/res.qrc
+RESOURCES += \
+    res/res.qrc

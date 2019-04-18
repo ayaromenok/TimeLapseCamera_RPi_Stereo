@@ -34,6 +34,7 @@ private:
     QVBoxLayout             *_loutCtrl;
     QImage                      *_imgCtrl;
     QLabel                      *_lbCtrl;
+    QPushButton                 *_pbCtrlQuit;
 
 };
 

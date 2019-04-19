@@ -29,7 +29,8 @@ YaStereoCam::capImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
     *_capL >> *_imgInL;
-    cv::imwrite("outCvImgInL.jpg",*_imgInL); //test write
+    //cv::imwrite("outCvImgInL.jpg",*_imgInL); //test write
+    emit imageLReady();
 }
 
 void

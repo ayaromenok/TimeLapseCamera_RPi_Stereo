@@ -17,6 +17,7 @@ public:
     ~YaStereoCam();
 
 signals:
+    void imageLReady();
 
 public slots:
     void capImages();

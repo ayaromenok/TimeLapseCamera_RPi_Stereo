@@ -14,6 +14,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 
     _cam = new YaStereoCam(this);
     connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
+    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -23,12 +24,19 @@ YaStereoWidget::~YaStereoWidget()
 }
 
 void
-YaStereoWidget::timerUpdate()
+YaStereoWidget::getImageL()
 {
-    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+    qInfo() << __PRETTY_FUNCTION__;
     QImage img;
     _cam->getImageL(img);
     _lbImgL->setPixmap(QPixmap::fromImage(img).scaled(this->width()/3,this->width()/4));
+}
+
+void
+YaStereoWidget::timerUpdate()
+{
+    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+
 }
 
 void

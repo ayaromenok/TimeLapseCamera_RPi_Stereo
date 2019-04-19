@@ -2,6 +2,7 @@
 #define YASTEREOCAM_H
 
 #include <QObject>
+class QImage;
 
 namespace cv {
     class Mat;
@@ -18,8 +19,9 @@ public:
 signals:
 
 public slots:
-    void getImage();
-
+    void capImages();
+    void getImageL(QImage &img);
+    void getImageR(QImage &img);
 private:
 
     cv::VideoCapture    *_capL;

@@ -13,7 +13,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     _timer->start(1000); //tets time: 1000msec
 
     _cam = new YaStereoCam(this);
-    connect(_timer, SIGNAL(timeout()), _cam, SLOT(getImage()));
+    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -26,6 +26,9 @@ void
 YaStereoWidget::timerUpdate()
 {
     qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+    QImage img;
+    _cam->getImageL(img);
+    _lbImgL->setPixmap(QPixmap::fromImage(img).scaled(this->width()/3,this->width()/4));
 }
 
 void

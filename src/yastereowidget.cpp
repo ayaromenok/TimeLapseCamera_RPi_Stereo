@@ -1,7 +1,10 @@
 #include "yastereowidget.h"
-#include "yastereocam.h"
+
 #include <QDebug>
 #include <QtWidgets>
+
+#include "yastereocam.h"
+#include "yaimageprocess.h"
 
 YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {

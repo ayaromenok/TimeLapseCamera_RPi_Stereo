@@ -18,11 +18,12 @@ public:
 
 signals:
     void imageLReady();
+    void imageRReady();
 
 public slots:
     void capImages();
-    void getImageL(QImage &img);
-    void getImageR(QImage &img);
+    void getImageL(QImage &img, bool swapRnB = false);
+    void getImageR(QImage &img, bool swapRnB = false);
 private:
 
     cv::VideoCapture    *_capL;

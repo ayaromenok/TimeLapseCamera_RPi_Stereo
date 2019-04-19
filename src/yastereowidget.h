@@ -23,6 +23,7 @@ signals:
 public slots:
     void timerUpdate();
     void getImageL();
+    void getImageR();
 
 private:
     void setWindowSize();

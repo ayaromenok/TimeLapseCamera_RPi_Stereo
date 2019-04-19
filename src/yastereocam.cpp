@@ -15,8 +15,7 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
     } else {
         _imgInL = new cv::Mat(320,240,CV_8UC3);
     }
-    //    cv::VideoCapture    *_capR;
-    //    cv::Mat             *_imgInR;
+
 }
 
 YaStereoCam::~YaStereoCam()
@@ -34,16 +33,25 @@ YaStereoCam::capImages()
 }
 
 void
-YaStereoCam::getImageL(QImage &img)
+YaStereoCam::getImageL(QImage &img, bool swapRnB)
 {
     qInfo() << __PRETTY_FUNCTION__;
+    if (swapRnB){
+        cv::cvtColor(*_imgInL, *_imgInL, cv::COLOR_BGR2RGB);
+    }
     QImage qimg(_imgInL->ptr(), _imgInL->cols, _imgInL->rows,
                 _imgInL->step, QImage::Format_RGB888);
     img = qimg;
 }
 
 void
-YaStereoCam::getImageR(QImage &img)
+YaStereoCam::getImageR(QImage &img, bool swapRnB)
 {
     qInfo() << __PRETTY_FUNCTION__;
+    if (swapRnB){
+        cv::cvtColor(*_imgInR, *_imgInR, cv::COLOR_BGR2RGB);
+    }
+    QImage qimg(_imgInR->ptr(), _imgInR->cols, _imgInR->rows,
+                _imgInR->step, QImage::Format_RGB888);
+    img = qimg;
 }

@@ -1,17 +1,68 @@
 #include "yastereowidget.h"
+
 #include <QDebug>
 #include <QtWidgets>
+
+#include "yastereocam.h"
+#include "yaimageprocess.h"
 
 YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
-    this->setGeometry(100,100,854,480);
+    setWindowSize();
     setUI();
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+    _timer->start(1000); //tets time: 1000msec
+
+    _cam = new YaStereoCam(this);
+    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
+    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
+    connect(_cam, SIGNAL(imageRReady()), this, SLOT(getImageR()));
 }
 
 YaStereoWidget::~YaStereoWidget()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    _timer->stop();
+}
+
+void
+YaStereoWidget::getImageL()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    QImage imgL;
+    _cam->getImageL(imgL, true);
+    _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
+}
+
+void
+YaStereoWidget::getImageR()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    QImage imgR;
+    _cam->getImageR(imgR, true);
+    _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
+}
+
+void
+YaStereoWidget::timerUpdate()
+{
+    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+
+}
+
+void
+YaStereoWidget::setWindowSize()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+#ifdef DEBUG_RPI_V7L
+    this->setGeometry(QGuiApplication::primaryScreen()->geometry());
+#endif //DEBUG_RPI_V7L
+
+#ifdef DEBUG_PC
+    this->setGeometry(100,100,854,480);
+#endif //DEBUG_PC
 }
 
 void

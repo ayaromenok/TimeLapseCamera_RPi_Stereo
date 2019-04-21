@@ -15,6 +15,8 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
     _timer->start(1000); //tets time: 1000msec
 
+    _ip = new YaImageProcess(this);
+
     _cam = new YaStereoCam(this);
     connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
     connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));

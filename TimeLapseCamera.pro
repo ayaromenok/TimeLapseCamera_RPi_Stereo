@@ -14,11 +14,13 @@ SOURCES += \
         src/main.cpp \
         src/yaimageprocess.cpp \
         src/yastereocam.cpp \
+        src/yastereotest.cpp \
         src/yastereowidget.cpp
 
 HEADERS += \
         src/yaimageprocess.h \
         src/yastereocam.h \
+        src/yastereotest.h \
         src/yastereowidget.h
 
 # Default rules for deployment.

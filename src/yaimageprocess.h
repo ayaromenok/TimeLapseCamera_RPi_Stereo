@@ -2,7 +2,8 @@
 #define YAIMAGEPROCESS_H
 
 #include <QObject>
-
+class YaStereoCam;
+class YaStereoTest;
 class YaImageProcess : public QObject
 {
     Q_OBJECT
@@ -13,6 +14,10 @@ public:
 signals:
 
 public slots:
+
+private:
+    YaStereoCam     *_cam;
+    YaStereoTest    *_test;
 };
 
 #endif // YAIMAGEPROCESS_H

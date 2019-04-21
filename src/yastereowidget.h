@@ -47,7 +47,7 @@ private:
 
     QTimer          *_timer;
     YaStereoCam     *_cam;
-    YaImageProcess  *_ip
+    YaImageProcess  *_ip;
 };
 
 #endif // YASTEREOWIDGET_H

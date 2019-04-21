@@ -17,10 +17,10 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 
     _ip = new YaImageProcess(this);
 
-    _cam = new YaStereoCam(this);
-    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
-    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
-    connect(_cam, SIGNAL(imageRReady()), this, SLOT(getImageR()));
+//    _cam = new YaStereoCam(this);
+//    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
+//    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
+//    connect(_cam, SIGNAL(imageRReady()), this, SLOT(getImageR()));
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -33,18 +33,18 @@ void
 YaStereoWidget::getImageL()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    QImage imgL;
-    _cam->getImageL(imgL, true);
-    _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
+//    QImage imgL;
+//    _cam->getImageL(imgL, true);
+//    _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
 }
 
 void
 YaStereoWidget::getImageR()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    QImage imgR;
-    _cam->getImageR(imgR, true);
-    _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
+//    QImage imgR;
+//    _cam->getImageR(imgR, true);
+//    _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
 }
 
 void

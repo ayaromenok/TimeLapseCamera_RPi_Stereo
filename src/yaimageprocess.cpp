@@ -7,7 +7,7 @@
 YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
- //   _cam = new YaStereoCam(this);
+    _cam = new YaStereoCam(this);
     _test = new YaStereoTest(this);
 }
 

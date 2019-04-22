@@ -11,11 +11,20 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
     _capL->set(cv::CAP_PROP_FRAME_WIDTH, 320);
     _capL->set(cv::CAP_PROP_FRAME_HEIGHT, 240);
     if(!_capL->isOpened()){
-        qErrnoWarning("CV Camera capture error");
-    } else {
-        _imgInL = new cv::Mat(320,240,CV_8UC3);
+        qErrnoWarning("CV Camera/Left capture error");
+    };
+#ifdef DEBUG_PC
+    qInfo() << "use single cam as a right source too";
+#else
+    _capR = new cv::VideoCapture(1);
+    _capR->set(cv::CAP_PROP_FRAME_WIDTH, 320);
+    _capR->set(cv::CAP_PROP_FRAME_HEIGHT, 240);
+    if(!_capR->isOpened()){
+        qErrnoWarning("CV Camera/Right capture error");
     }
-
+#endif
+    _imgInL = new cv::Mat(320,240,CV_8UC3);
+    _imgInR = new cv::Mat(320,240,CV_8UC3);
 }
 
 YaStereoCam::~YaStereoCam()
@@ -28,8 +37,15 @@ YaStereoCam::capImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
     *_capL >> *_imgInL;
+#ifdef DEBUG_PC
+    *_imgInR = *_imgInL;
+#else
+    *_capR >> *_imgInR;
+#endif
+
     //cv::imwrite("outCvImgInL.jpg",*_imgInL); //test write
     emit imageLReady();
+    emit imageRReady();
 }
 
 void
@@ -54,4 +70,16 @@ YaStereoCam::getImageR(QImage &img, bool swapRnB)
     QImage qimg(_imgInR->ptr(), _imgInR->cols, _imgInR->rows,
                 _imgInR->step, QImage::Format_RGB888);
     img = qimg;
+}
+void
+YaStereoCam::getImageL(cv::Mat &img)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    img = *_imgInL;
+}
+void
+YaStereoCam::getImageR(cv::Mat &img)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    img = *_imgInR;
 }

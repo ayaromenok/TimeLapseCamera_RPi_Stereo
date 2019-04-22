@@ -24,6 +24,8 @@ public slots:
     void capImages();
     void getImageL(QImage &img, bool swapRnB = false);
     void getImageR(QImage &img, bool swapRnB = false);
+    void getImageL(cv::Mat &img);
+    void getImageR(cv::Mat &img);
 private:
 
     cv::VideoCapture    *_capL;

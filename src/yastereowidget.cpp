@@ -13,14 +13,13 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     setUI();
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
-    _timer->start(1000); //tets time: 1000msec
+    _timer->start(2000); //test time: 2 sec
 
-    _ip = new YaImageProcess(this);
+    _imp = new YaImageProcess(this);
 
-//    _cam = new YaStereoCam(this);
-//    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
-//    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
-//    connect(_cam, SIGNAL(imageRReady()), this, SLOT(getImageR()));
+    connect(_timer, SIGNAL(timeout()), _imp, SLOT(getImages()));
+    connect(_imp, SIGNAL(imageLReady()), this, SLOT(getImageL()));
+    connect(_imp, SIGNAL(imageRReady()), this, SLOT(getImageR()));
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -33,18 +32,18 @@ void
 YaStereoWidget::getImageL()
 {
     qInfo() << __PRETTY_FUNCTION__;
-//    QImage imgL;
-//    _cam->getImageL(imgL, true);
-//    _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
+    QImage imgL;
+    _imp->getImageL(imgL);
+    _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
 }
 
 void
 YaStereoWidget::getImageR()
 {
     qInfo() << __PRETTY_FUNCTION__;
-//    QImage imgR;
-//    _cam->getImageR(imgR, true);
-//    _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
+    QImage imgR;
+    _imp->getImageR(imgR);
+    _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
 }
 
 void
@@ -75,16 +74,12 @@ YaStereoWidget::setUI()
 
     _gbImgL = new QGroupBox(tr("Image/Left"));
     _lbImgL = new QLabel("Image/Left");
-    _imgL = new QImage(":/test/imgCam13L.jpg");
-    _lbImgL->setPixmap(QPixmap::fromImage(*_imgL).scaled(this->width()/3,this->width()/4));
     _loutImgL = new QVBoxLayout();
     _loutImgL->addWidget(_lbImgL);
     _gbImgL->setLayout(_loutImgL);
 
     _gbImgR = new QGroupBox(tr("Image/Right"));
     _lbImgR = new QLabel("Image/Right");
-    _imgR = new QImage(":/test/imgCam13R.jpg");
-    _lbImgR->setPixmap(QPixmap::fromImage(*_imgR).scaled(this->width()/3,this->width()/4));
     _loutImgR = new QVBoxLayout();
     _loutImgR->addWidget(_lbImgR);
     _gbImgR->setLayout(_loutImgR);

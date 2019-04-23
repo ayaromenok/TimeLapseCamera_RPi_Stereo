@@ -46,7 +46,7 @@ private:
     QPushButton                 *_pbCtrlQuit;
 
     QTimer          *_timer;
-    YaImageProcess  *_ip;
+    YaImageProcess  *_imp;
 };
 
 #endif // YASTEREOWIDGET_H

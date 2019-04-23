@@ -13,12 +13,13 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     setUI();
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
-    _timer->start(1000); //tets time: 1000msec
 
-    _cam = new YaStereoCam(this);
-    connect(_timer, SIGNAL(timeout()), _cam, SLOT(capImages()));
-    connect(_cam, SIGNAL(imageLReady()), this, SLOT(getImageL()));
-    connect(_cam, SIGNAL(imageRReady()), this, SLOT(getImageR()));
+    _imp = new YaImageProcess(this);
+
+    connect(_imp, SIGNAL(imageLReady()), this, SLOT(getImageL()));
+    connect(_imp, SIGNAL(imageRReady()), this, SLOT(getImageR()));
+
+    updateTimerInterval(_cbCtrlTimer->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -32,7 +33,7 @@ YaStereoWidget::getImageL()
 {
     qInfo() << __PRETTY_FUNCTION__;
     QImage imgL;
-    _cam->getImageL(imgL, true);
+    _imp->getImageL(imgL);
     _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
 }
 
@@ -41,7 +42,7 @@ YaStereoWidget::getImageR()
 {
     qInfo() << __PRETTY_FUNCTION__;
     QImage imgR;
-    _cam->getImageR(imgR, true);
+    _imp->getImageR(imgR);
     _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
 }
 
@@ -49,9 +50,29 @@ void
 YaStereoWidget::timerUpdate()
 {
     qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
-
+    _imp->getImages();
 }
 
+void
+YaStereoWidget::updateSource(int source)
+{
+    qInfo() << "source:" << source;
+    if (0 == source){
+        _imp->setOpImage(YaImageProcess::NOPS__SRC_TEST);
+    } else {
+        _imp->setOpImage(YaImageProcess::NOPS__SRC_CAM);
+    }
+    timerUpdate();
+}
+void
+YaStereoWidget::updateTimerInterval(int index)
+{
+    _timer->stop();
+    if (index > 0){
+        _timer->setInterval(index*1000);
+        _timer->start();
+    }
+}
 void
 YaStereoWidget::setWindowSize()
 {
@@ -73,27 +94,46 @@ YaStereoWidget::setUI()
 
     _gbImgL = new QGroupBox(tr("Image/Left"));
     _lbImgL = new QLabel("Image/Left");
-    _imgL = new QImage(":/test/imgCam13L.jpg");
-    _lbImgL->setPixmap(QPixmap::fromImage(*_imgL).scaled(this->width()/3,this->width()/4));
     _loutImgL = new QVBoxLayout();
     _loutImgL->addWidget(_lbImgL);
     _gbImgL->setLayout(_loutImgL);
 
     _gbImgR = new QGroupBox(tr("Image/Right"));
     _lbImgR = new QLabel("Image/Right");
-    _imgR = new QImage(":/test/imgCam13R.jpg");
-    _lbImgR->setPixmap(QPixmap::fromImage(*_imgR).scaled(this->width()/3,this->width()/4));
     _loutImgR = new QVBoxLayout();
     _loutImgR->addWidget(_lbImgR);
     _gbImgR->setLayout(_loutImgR);
 
-    _gbCtrl = new QGroupBox(tr("Controls"));
-    _lbCtrl = new QLabel("Controls");
-    _pbCtrlQuit = new QPushButton(tr("E&xit"), this);
-    connect(_pbCtrlQuit, SIGNAL(clicked()), this, SLOT(close()));
+    _gbCtrl = new QGroupBox(tr("Controls"));    
     _loutCtrl = new QVBoxLayout();
+    _pbCtrlQuit = new QPushButton(tr("E&xit"), this);
+    connect(_pbCtrlQuit, SIGNAL(clicked()), this, SLOT(close()));    
     _loutCtrl->addWidget(_pbCtrlQuit);
-    _loutCtrl->addWidget(_lbCtrl);
+    _pbCtrlProcess = new QPushButton(tr("&Process"), this);
+    connect(_pbCtrlProcess, SIGNAL(clicked()), this, SLOT(timerUpdate()));
+    _loutCtrl->addWidget(_pbCtrlProcess);
+    _cbCtrlSource = new QComboBox();
+    _cbCtrlSource->addItem("Test Source");
+    _cbCtrlSource->addItem("Camera Source");
+#ifndef DEBUG_PC
+    _cbCtrlSource->setCurrentIndex(1);
+#endif //DEBUG_PC
+    connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
+          this, &YaStereoWidget::updateSource);
+
+    _loutCtrl->addWidget(_cbCtrlSource);
+
+    _cbCtrlTimer = new QComboBox();
+    _cbCtrlTimer->addItems(QStringList()<<"Timer stopped" << "1 sec" << "2 sec"
+                           << "3 sec" << "4 sec" << "5 sec");
+    _cbCtrlTimer->setCurrentIndex(2);
+
+    connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
+          this, &YaStereoWidget::updateTimerInterval);
+
+    _loutCtrl->addWidget(_cbCtrlTimer);
+    _lbCtrlImage = new QLabel("Control Image place");
+    _loutCtrl->addWidget(_lbCtrlImage);
     _gbCtrl->setLayout(_loutCtrl);
 
     _loutMain->addWidget(_gbImgL);

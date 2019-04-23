@@ -9,7 +9,8 @@ class QLabel;
 class QPushButton;
 class QImage;
 class QTimer;
-class YaStereoCam;
+class QComboBox;
+
 class YaImageProcess;
 
 class YaStereoWidget : public QWidget
@@ -23,6 +24,8 @@ signals:
 
 public slots:
     void timerUpdate();
+    void updateSource(int source);
+    void updateTimerInterval(int index);
     void getImageL();
     void getImageR();
 
@@ -42,12 +45,14 @@ private:
     QGroupBox           *_gbCtrl;
     QVBoxLayout             *_loutCtrl;
     QImage                      *_imgCtrl;
-    QLabel                      *_lbCtrl;
     QPushButton                 *_pbCtrlQuit;
+    QPushButton                 *_pbCtrlProcess;
+    QComboBox                   *_cbCtrlSource;
+    QComboBox                   *_cbCtrlTimer;
+    QLabel                      *_lbCtrlImage;
 
     QTimer          *_timer;
-    YaStereoCam     *_cam;
-    YaImageProcess  *_ip
+    YaImageProcess  *_imp;
 };
 
 #endif // YASTEREOWIDGET_H

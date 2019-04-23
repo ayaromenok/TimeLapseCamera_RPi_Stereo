@@ -32,6 +32,7 @@ private:
     cv::VideoCapture    *_capR;
     cv::Mat             *_imgInL;
     cv::Mat             *_imgInR;
+    quint64             count;
 };
 
 #endif // YASTEREOCAM_H

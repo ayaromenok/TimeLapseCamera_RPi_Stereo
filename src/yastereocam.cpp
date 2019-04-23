@@ -26,6 +26,7 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
 #endif
     _imgInL = new cv::Mat(320,240,CV_8UC3);
     _imgInR = new cv::Mat(320,240,CV_8UC3);
+    count = 0;
 }
 
 YaStereoCam::~YaStereoCam()
@@ -37,9 +38,10 @@ void
 YaStereoCam::capImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    count++;
     *_capL >> *_imgInL;
     if (_imgInL->empty()){
-        qErrnoWarning("\tImage/Left is empty");
+        qWarning() <<"\tImage/Left is empty #" << count;
         QCoreApplication::exit(-1);
     }
 #ifdef DEBUG_PC
@@ -47,7 +49,7 @@ YaStereoCam::capImages()
 #else
     *_capR >> *_imgInR;
     if (_imgInR->empty()){
-        qErrnoWarning("\tImage/Right is empty");
+        qWarning() <<"\tImage/Right is empty #" << count;
         QCoreApplication::exit(-2);
     }
 #endif

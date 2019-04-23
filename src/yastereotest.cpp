@@ -23,6 +23,7 @@ void
 YaStereoTest::getImageL(QImage &img)
 {
     qInfo() << __PRETTY_FUNCTION__;
+    // \todo need to move to getImages to make it similar to StereoCam
     img = QImage(":/test/imgCam13L.jpg");
 }
 
@@ -30,6 +31,7 @@ void
 YaStereoTest::getImageR(QImage &img)
 {
     qInfo() << __PRETTY_FUNCTION__;
+    // \todo need to move to getImages to make it similar to StereoCam
     img = QImage(":/test/imgCam13R.jpg");
 }
 

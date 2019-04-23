@@ -19,7 +19,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     connect(_imp, SIGNAL(imageLReady()), this, SLOT(getImageL()));
     connect(_imp, SIGNAL(imageRReady()), this, SLOT(getImageR()));
 
-    _timer->start(5000); //test time: 5 sec
+    updateTimerInterval(_cbCtrlTimer->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -64,7 +64,15 @@ YaStereoWidget::updateSource(int source)
     }
     timerUpdate();
 }
-
+void
+YaStereoWidget::updateTimerInterval(int index)
+{
+    _timer->stop();
+    if (index > 0){
+        _timer->setInterval(index*1000);
+        _timer->start();
+    }
+}
 void
 YaStereoWidget::setWindowSize()
 {
@@ -107,10 +115,23 @@ YaStereoWidget::setUI()
     _cbCtrlSource = new QComboBox();
     _cbCtrlSource->addItem("Test Source");
     _cbCtrlSource->addItem("Camera Source");
+#ifndef DEBUG_PC
+    _cbCtrlSource->setCurrentIndex(1);
+#endif //DEBUG_PC
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);
 
     _loutCtrl->addWidget(_cbCtrlSource);
+
+    _cbCtrlTimer = new QComboBox();
+    _cbCtrlTimer->addItems(QStringList()<<"Timer stopped" << "1 sec" << "2 sec"
+                           << "3 sec" << "4 sec" << "5 sec");
+    _cbCtrlTimer->setCurrentIndex(2);
+
+    connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
+          this, &YaStereoWidget::updateTimerInterval);
+
+    _loutCtrl->addWidget(_cbCtrlTimer);
     _lbCtrlImage = new QLabel("Control Image place");
     _loutCtrl->addWidget(_lbCtrlImage);
     _gbCtrl->setLayout(_loutCtrl);

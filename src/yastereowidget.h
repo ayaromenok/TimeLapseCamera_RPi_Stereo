@@ -24,7 +24,8 @@ signals:
 
 public slots:
     void timerUpdate();
-    void updateSource(int index);
+    void updateSource(int source);
+    void updateTimerInterval(int index);
     void getImageL();
     void getImageR();
 
@@ -47,6 +48,7 @@ private:
     QPushButton                 *_pbCtrlQuit;
     QPushButton                 *_pbCtrlProcess;
     QComboBox                   *_cbCtrlSource;
+    QComboBox                   *_cbCtrlTimer;
     QLabel                      *_lbCtrlImage;
 
     QTimer          *_timer;

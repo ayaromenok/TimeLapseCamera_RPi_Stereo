@@ -26,6 +26,7 @@ public slots:
     void timerUpdate();
     void updateSource(int source);
     void updateTimerInterval(int index);
+    void updateProcessOp(int index);
     void getImageL();
     void getImageR();
 
@@ -49,6 +50,7 @@ private:
     QPushButton                 *_pbCtrlProcess;
     QComboBox                   *_cbCtrlSource;
     QComboBox                   *_cbCtrlTimer;
+    QComboBox                   *_cbCtrlProcessOp;
     QLabel                      *_lbCtrlImage;
 
     QTimer          *_timer;

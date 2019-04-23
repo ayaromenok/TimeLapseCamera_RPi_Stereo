@@ -42,7 +42,7 @@ YaImageProcess::getImages()
 void
 YaImageProcess::setOpImage(OPERATION operation)
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << operation;
     op = operation;
 }
 

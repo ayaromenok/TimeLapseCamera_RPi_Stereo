@@ -60,7 +60,7 @@ YaStereoWidget::updateSource(int source)
     if (0 == source){
         _imp->setOpImage(YaImageProcess::NOPS__SRC_TEST);
     } else {
-        _imp->setOpImage(YaImageProcess::NO_OPS__SRC_CAM);
+        _imp->setOpImage(YaImageProcess::NOPS__SRC_CAM);
     }
     timerUpdate();
 }

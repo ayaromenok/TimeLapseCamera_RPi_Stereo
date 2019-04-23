@@ -20,7 +20,7 @@ public:
     enum OPERATION{
         NOPS       = 0x0000,
         NOPS__SRC_TEST = 0x0001,
-        NO_OPS__SRC_CAM = 0x0002
+        NOPS__SRC_CAM = 0x0002
     };
 
 signals:

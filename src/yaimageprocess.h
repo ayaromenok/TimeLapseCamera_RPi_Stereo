@@ -38,6 +38,11 @@ private:
     YaStereoCam     *_cam;
     YaStereoTest    *_test;
     OPERATION       op;
+    cv::Mat         *_imgL;
+    cv::Mat         *_imgR;
+
+    cv::Mat         *_imgOutL;
+    cv::Mat         *_imgOutR;
 };
 
 #endif // YAIMAGEPROCESS_H

@@ -115,9 +115,7 @@ YaStereoWidget::setUI()
     _cbCtrlSource = new QComboBox();
     _cbCtrlSource->addItem("Test Source");
     _cbCtrlSource->addItem("Camera Source");
-#ifndef DEBUG_PC
     _cbCtrlSource->setCurrentIndex(1);
-#endif //DEBUG_PC
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);
 

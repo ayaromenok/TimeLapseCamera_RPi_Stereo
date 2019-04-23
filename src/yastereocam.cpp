@@ -9,8 +9,8 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     _capL = new cv::VideoCapture(0);
-    _capL->set(cv::CAP_PROP_FRAME_WIDTH, 320);
-    _capL->set(cv::CAP_PROP_FRAME_HEIGHT, 240);
+    _capL->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    _capL->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
     if(!_capL->isOpened()){
         qErrnoWarning("CV Camera/Left capture error");
     };
@@ -18,14 +18,14 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
     qInfo() << "use single cam as a right source too";
 #else
     _capR = new cv::VideoCapture(1);
-    _capR->set(cv::CAP_PROP_FRAME_WIDTH, 320);
-    _capR->set(cv::CAP_PROP_FRAME_HEIGHT, 240);
+    _capR->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    _capR->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
     if(!_capR->isOpened()){
         qErrnoWarning("CV Camera/Right capture error");
     }
 #endif
-    _imgInL = new cv::Mat(320,240,CV_8UC3);
-    _imgInR = new cv::Mat(320,240,CV_8UC3);
+    _imgInL = new cv::Mat(640,480,CV_8UC3);
+    _imgInR = new cv::Mat(640,480,CV_8UC3);
     count = 0;
 }
 

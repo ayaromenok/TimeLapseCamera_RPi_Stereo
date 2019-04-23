@@ -37,10 +37,16 @@ YaStereoCam::capImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
     *_capL >> *_imgInL;
+    if (_imgInL->empty()){
+        qErrnoWarning("Image/Left is empty");
+    }
 #ifdef DEBUG_PC
     *_imgInR = *_imgInL;
 #else
     *_capR >> *_imgInR;
+    if (_imgInR->empty()){
+        qErrnoWarning("Image/Right is empty");
+    }
 #endif
 
     //cv::imwrite("outCvImgInL.jpg",*_imgInL); //test write

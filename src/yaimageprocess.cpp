@@ -12,7 +12,8 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     qInfo() << __PRETTY_FUNCTION__;
     _cam = new YaStereoCam(this);
     _test = new YaStereoTest(this);
-    op = NOPS__SRC_CAM;
+    op = OP_OP1;
+    src = SRC_CAM;
     _imgL = new cv::Mat;
     _imgR = new cv::Mat;
     _imgOutL = new cv::Mat;
@@ -32,7 +33,7 @@ void
 YaImageProcess::getImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    if (op & NOPS__SRC_TEST){
+    if (op & SRC_TEST){
         _test->getImages();
     } else {
         _cam->capImages();
@@ -46,6 +47,12 @@ YaImageProcess::setOpImage(OPERATION operation)
     op = operation;
 }
 
+void
+YaImageProcess::setSrcImage(SOURCE source)
+{
+    qInfo() << __PRETTY_FUNCTION__ << source;
+    src = source;
+}
 
 void
 YaImageProcess::getImageL(QImage &img)
@@ -80,6 +87,41 @@ YaImageProcess::process()
 
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
     cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
+
+    switch (op) {
+    case OP_NOP:{
+        qInfo() << "OP_NOP";
+        break;
+    }
+    case OP_OP1:{
+        qInfo() << "OP_OP1";
+        break;
+    }
+    case OP_OP2:{
+        qInfo() << "OP_OP2";
+        break;
+    }
+    case OP_OP3:{
+        qInfo() << "OP_OP3";
+        break;
+    }
+    case OP_OP4:{
+        qInfo() << "OP_OP4";
+        break;
+    }
+    case OP_OP5:{
+        qInfo() << "OP_OP5";
+        break;
+    }
+    case OP_OP6:{
+        qInfo() << "OP_OP6";
+        break;
+    }
+    default:{
+        qInfo() << "Operation not implemented";
+        break;
+    }
+    }
 
     emit imageLReady();
     emit imageRReady();

@@ -58,9 +58,9 @@ YaStereoWidget::updateSource(int source)
 {
     qInfo() << "source:" << source;
     if (0 == source){
-        _imp->setOpImage(YaImageProcess::NOPS__SRC_TEST);
+        _imp->setSrcImage(YaImageProcess::SRC_TEST);
     } else {
-        _imp->setOpImage(YaImageProcess::NOPS__SRC_CAM);
+        _imp->setSrcImage(YaImageProcess::SRC_CAM);
     }
     timerUpdate();
 }
@@ -78,7 +78,7 @@ YaStereoWidget::updateTimerInterval(int index)
 void
 YaStereoWidget::updateProcessOp(int index)
 {
-    _imp->setOpImage((YaImageProcess::OPERATION)index);
+    _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
 }
 
 void
@@ -137,7 +137,8 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
-    _cbCtrlProcessOp->addItems(QStringList() << "Op #0" << "Op #1" << "Op #2");
+    _cbCtrlProcessOp->addItems(QStringList() << "Op #1" << "Op #2" << "Op #3"
+                               << "Op #4" << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
     _loutCtrl->addWidget(_cbCtrlProcessOp);

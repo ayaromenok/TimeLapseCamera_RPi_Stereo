@@ -32,6 +32,7 @@ public slots:
     void setOpImage(OPERATION operation);
     void getImageL(QImage &imgL);
     void getImageR(QImage &imgR);
+    void process();
 
 private:
     YaStereoCam     *_cam;

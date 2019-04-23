@@ -50,7 +50,7 @@ void
 YaStereoWidget::timerUpdate()
 {
     qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
-    _imp->getImages();
+    _imp->process();
 }
 
 void

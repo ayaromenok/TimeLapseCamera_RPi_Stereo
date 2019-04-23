@@ -27,8 +27,6 @@ YaImageProcess::getImages()
     } else {
         _cam->capImages();
     }
-    emit imageLReady();
-    emit imageRReady();
 }
 
 void
@@ -54,11 +52,19 @@ void
 YaImageProcess::getImageR(QImage &img)
 {
     qInfo() << __PRETTY_FUNCTION__;
-
-    qInfo() << __PRETTY_FUNCTION__;
     if (op & NOPS__SRC_TEST){
         _test->getImageR(img);
     } else {
         _cam->getImageR(img, true);
     }
+}
+
+void
+YaImageProcess::process()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    getImages();
+
+    emit imageLReady();
+    emit imageRReady();
 }

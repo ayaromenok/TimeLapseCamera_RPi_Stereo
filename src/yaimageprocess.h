@@ -11,15 +11,17 @@ namespace cv {
 
 class YaImageProcess : public QObject
 {
-    enum OPERATION{
-        NO_OPS       = 0x0000,
-        NO_OPS__TEST = 0x0001,
-        NO_OPS__CAM = 0x0002
-    };
+
     Q_OBJECT
 public:
     explicit YaImageProcess(QObject *parent = nullptr);
     ~YaImageProcess();
+
+    enum OPERATION{
+        NOPS       = 0x0000,
+        NOPS__SRC_TEST = 0x0001,
+        NO_OPS__SRC_CAM = 0x0002
+    };
 
 signals:
     void imageLReady();

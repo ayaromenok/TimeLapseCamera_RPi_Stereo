@@ -10,7 +10,7 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     qInfo() << __PRETTY_FUNCTION__;
     _cam = new YaStereoCam(this);
     _test = new YaStereoTest(this);
-    op = NO_OPS__TEST;
+    op = NOPS__SRC_TEST;
 }
 
 YaImageProcess::~YaImageProcess()
@@ -22,7 +22,7 @@ void
 YaImageProcess::getImages()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    if (op & NO_OPS__TEST){
+    if (op & NOPS__SRC_TEST){
         qInfo() << "get test images";
     } else {
         qInfo() << "get cam images";

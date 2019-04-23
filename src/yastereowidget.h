@@ -9,6 +9,7 @@ class QLabel;
 class QPushButton;
 class QImage;
 class QTimer;
+class QComboBox;
 
 class YaImageProcess;
 
@@ -23,6 +24,7 @@ signals:
 
 public slots:
     void timerUpdate();
+    void updateSource(int index);
     void getImageL();
     void getImageR();
 
@@ -42,8 +44,10 @@ private:
     QGroupBox           *_gbCtrl;
     QVBoxLayout             *_loutCtrl;
     QImage                      *_imgCtrl;
-    QLabel                      *_lbCtrl;
     QPushButton                 *_pbCtrlQuit;
+    QPushButton                 *_pbCtrlProcess;
+    QComboBox                   *_cbCtrlSource;
+    QLabel                      *_lbCtrlImage;
 
     QTimer          *_timer;
     YaImageProcess  *_imp;

@@ -1,6 +1,7 @@
 #include "yastereocam.h"
 #include <QDebug>
 #include <QImage>
+#include <QCoreApplication>
 
 #include <opencv2/opencv.hpp>
 
@@ -38,14 +39,16 @@ YaStereoCam::capImages()
     qInfo() << __PRETTY_FUNCTION__;
     *_capL >> *_imgInL;
     if (_imgInL->empty()){
-        qErrnoWarning("Image/Left is empty");
+        qErrnoWarning("\tImage/Left is empty");
+        QCoreApplication::exit(-1);
     }
 #ifdef DEBUG_PC
     *_imgInR = *_imgInL;
 #else
     *_capR >> *_imgInR;
     if (_imgInR->empty()){
-        qErrnoWarning("Image/Right is empty");
+        qErrnoWarning("\tImage/Right is empty");
+        QCoreApplication::exit(-2);
     }
 #endif
 

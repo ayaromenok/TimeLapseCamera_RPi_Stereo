@@ -64,9 +64,11 @@ void
 YaStereoCam::getImageR(QImage &img, bool swapRnB)
 {
     qInfo() << __PRETTY_FUNCTION__;
+#ifndef DEBUG_PC
     if (swapRnB){
         cv::cvtColor(*_imgInR, *_imgInR, cv::COLOR_BGR2RGB);
     }
+#endif //DEBUG_PC
     QImage qimg(_imgInR->ptr(), _imgInR->cols, _imgInR->rows,
                 _imgInR->step, QImage::Format_RGB888);
     img = qimg;

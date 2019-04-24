@@ -125,7 +125,7 @@ YaStereoWidget::setUI()
                             << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(2);
+    _cbCtrlSource->setCurrentIndex(0);
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();
@@ -137,7 +137,7 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
-    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray "
+    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray"
                                << "Canny filter" << "Checked Board"
                                << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),

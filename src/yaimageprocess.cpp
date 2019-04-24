@@ -94,27 +94,27 @@ YaImageProcess::process()
         break;
     }
     case OP_OP1:{
-        qInfo() << "OP_OP1";
+        op1();
         break;
     }
     case OP_OP2:{
-        qInfo() << "OP_OP2";
+        op2();
         break;
     }
     case OP_OP3:{
-        qInfo() << "OP_OP3";
+        qInfo() << "OP_OP3 - not implemented for now";
         break;
     }
     case OP_OP4:{
-        qInfo() << "OP_OP4";
+        qInfo() << "OP_OP4 - not implemented for now";
         break;
     }
     case OP_OP5:{
-        qInfo() << "OP_OP5";
+        qInfo() << "OP_OP5 - not implemented for now";
         break;
     }
     case OP_OP6:{
-        qInfo() << "OP_OP6";
+        qInfo() << "OP_OP6 - not implemented for now";
         break;
     }
     default:{
@@ -125,4 +125,16 @@ YaImageProcess::process()
 
     emit imageLReady();
     emit imageRReady();
+}
+
+void
+YaImageProcess::op1()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+}
+
+void
+YaImageProcess::op2()
+{
+    qInfo() << __PRETTY_FUNCTION__;
 }

@@ -122,12 +122,12 @@ YaStereoWidget::setUI()
     _pbCtrlProcess = new QPushButton(tr("&Process"), this);
     connect(_pbCtrlProcess, SIGNAL(clicked()), this, SLOT(timerUpdate()));
     _loutCtrl->addWidget(_pbCtrlProcess);
+
     _cbCtrlSource = new QComboBox();
-    _cbCtrlSource->addItem("Test Source");
-    _cbCtrlSource->addItem("Camera Source");
-    _cbCtrlSource->setCurrentIndex(1);
+    _cbCtrlSource->addItems(QStringList() << "Test Source" << "Camera Source");
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
-          this, &YaStereoWidget::updateSource);
+          this, &YaStereoWidget::updateSource);    
+    _cbCtrlSource->setCurrentIndex(1);
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();

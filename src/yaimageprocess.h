@@ -44,6 +44,9 @@ public slots:
     void process();
 
 private:
+    void  op1();
+    void  op2();
+
     YaStereoCam     *_cam;
     YaStereoTest    *_test;
     OPERATION       op;

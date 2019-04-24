@@ -33,7 +33,7 @@ void
 YaImageProcess::getImages()
 {
 //    qInfo() << __PRETTY_FUNCTION__;
-    if (op & SRC_TEST){
+    if (src & SRC_TEST){
         _test->getImages();
     } else {
         _cam->capImages();

@@ -107,7 +107,7 @@ YaImageProcess::process()
 void
 YaImageProcess::op1()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << "BGR 2 RGB";
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
     cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
 }
@@ -115,7 +115,7 @@ YaImageProcess::op1()
 void
 YaImageProcess::op2()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << "BGR 2 HLS/Gray";
     cv::Mat tmpR;
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2HLS);
     cv::cvtColor(*_imgR, tmpR, cv::COLOR_BGR2GRAY);
@@ -125,7 +125,7 @@ YaImageProcess::op2()
 void
 YaImageProcess::op3()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << "Canny filter";
     cv::Mat grayL, grayR, cannyL, cannyR;
 
     cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
@@ -140,7 +140,29 @@ YaImageProcess::op3()
 void
 YaImageProcess::op4()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << "Checked Board";
+    cv::Mat grayL, grayR;
+    cv::Mat outPointsL,outPointsR;
+
+    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
+
+    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
+    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
+
+    if (cv::findChessboardCorners(*_imgL, cv::Size(4,6), outPointsL))
+    {
+        cv::drawChessboardCorners(*_imgOutL, cv::Size(4,6), outPointsL, true);
+    } else {
+        qInfo() << "Left: can't find check board";
+    }
+
+    if (cv::findChessboardCorners(*_imgR, cv::Size(4,6), outPointsR))
+    {
+        cv::drawChessboardCorners(*_imgOutR, cv::Size(4,6), outPointsR, true);
+    } else {
+        qInfo() << "Right: can't find check board";
+    }
 }
 
 void

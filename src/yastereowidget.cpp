@@ -89,7 +89,7 @@ YaStereoWidget::setWindowSize()
 #endif //DEBUG_RPI_V7L
 
 #ifdef DEBUG_PC
-    this->setGeometry(100,100,854,480);
+    this->setGeometry(0, 0,1280,720);
 #endif //DEBUG_PC
 }
 
@@ -125,7 +125,7 @@ YaStereoWidget::setUI()
                             << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(0);
+    _cbCtrlSource->setCurrentIndex(2);
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();
@@ -137,14 +137,15 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
-    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray " << "Canny filter"
-                               << "Op #4" << "Op #5" << "Op #6");
+    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray "
+                               << "Canny filter" << "Checked Board"
+                               << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
-    _cbCtrlProcessOp->setCurrentIndex(0);
+    _cbCtrlProcessOp->setCurrentIndex(3);
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
-    _lbCtrlImage = new QLabel("Control Image place");
+    _lbCtrlImage = new QLabel("Place for Control Image");
     _loutCtrl->addWidget(_lbCtrlImage);
     _gbCtrl->setLayout(_loutCtrl);
 

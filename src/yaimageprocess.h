@@ -27,8 +27,11 @@ public:
         OP_NOP          = 0xF000
     };
     enum SOURCE{
-        SRC_TEST = 0x0001,
-        SRC_CAM  = 0x0002
+        SRC_CAM  = 0x0001,
+        SRC_TEST_1 = 0x0002,
+        SRC_TEST_2 = 0x0004,
+        SRC_TEST_3 = 0x0008,
+        SRC_TEST_4 = 0x00010
     };
 
 signals:

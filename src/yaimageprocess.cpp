@@ -33,14 +33,16 @@ void
 YaImageProcess::getImages()
 {
 //    qInfo() << __PRETTY_FUNCTION__;
-    if (src & SRC_TEST){
-        _test->getImages();
-        _test->getImageL(*_imgL);
-        _test->getImageR(*_imgR);
-    } else {
+    if (src & SRC_CAM){
         _cam->capImages();
         _cam->getImageL(*_imgL);
         _cam->getImageR(*_imgR);
+
+    } else {
+        _test->setTestImage((YaStereoTest::TEST_IMAGE) src);
+        _test->getImages();
+        _test->getImageL(*_imgL);
+        _test->getImageR(*_imgR);
     }
 }
 

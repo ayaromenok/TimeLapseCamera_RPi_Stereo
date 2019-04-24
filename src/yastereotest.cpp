@@ -58,4 +58,37 @@ YaStereoTest::getImageR(cv::Mat &img)
                    CV_8UC4, _qimgInR->bits());
     img = imgOut;
 }
+void
+YaStereoTest::setTestImage(TEST_IMAGE img)
+{
+    qInfo() << __PRETTY_FUNCTION__ << img;
+    if (tImg == img){
+        qInfo() << "same test image as before";
+        return;
+    }
+    tImg = img;
+
+    delete _qimgInL;
+    delete _qimgInR;
+
+    switch (tImg) {
+    case BALKONY_HSIZE:{
+        _qimgInL = new QImage(":/test/imgCam13L.jpg");
+        _qimgInR = new QImage(":/test/imgCam13R.jpg");
+        break;
+    }
+    case CHK_BOARD_HSIZE:{
+        _qimgInL = new QImage(":/test/imgCam13LcheckBoard.jpg");
+        _qimgInR = new QImage(":/test/imgCam13RcheckBoard.jpg");
+        break;
+    }
+    default:{
+        qInfo() << "default images";
+        _qimgInL = new QImage(":/test/defaultL.jpg");
+        _qimgInR = new QImage(":/test/defaultR.jpg");
+        break;
+    }
+    }
+
+}
 

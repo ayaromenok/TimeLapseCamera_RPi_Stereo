@@ -60,11 +60,7 @@ void
 YaStereoWidget::updateSource(int source)
 {
     qInfo() << "source:" << source;
-    if (0 == source){
-        _imp->setSrcImage(YaImageProcess::SRC_TEST);
-    } else {
-        _imp->setSrcImage(YaImageProcess::SRC_CAM);
-    }
+    _imp->setSrcImage((YaImageProcess::SOURCE)(1<<source));
     timerUpdate();
 }
 
@@ -125,7 +121,8 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_pbCtrlProcess);
 
     _cbCtrlSource = new QComboBox();
-    _cbCtrlSource->addItems(QStringList() << "Test Source" << "Camera Source");
+    _cbCtrlSource->addItems(QStringList() << "Camera Source" << "Test: Balkony"
+                            << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
     _cbCtrlSource->setCurrentIndex(0);

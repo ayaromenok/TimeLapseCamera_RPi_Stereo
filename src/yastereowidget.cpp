@@ -143,7 +143,7 @@ YaStereoWidget::setUI()
                                << "Op #4" << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
-    _cbCtrlProcessOp->setCurrentIndex(1);
+    _cbCtrlProcessOp->setCurrentIndex(0);
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
     _lbCtrlImage = new QLabel("Control Image place");

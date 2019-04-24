@@ -85,8 +85,7 @@ YaImageProcess::process()
 //    qInfo() << "imgL" << _imgL->cols << _imgL->rows
 //            << "imgR" << _imgR->cols << _imgR->rows;
 
-    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
-    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
+
 
     switch (op) {
     case OP_NOP:{
@@ -131,10 +130,16 @@ void
 YaImageProcess::op1()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
+    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
 }
 
 void
 YaImageProcess::op2()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    cv::Mat tmpR;
+    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2HLS);
+    cv::cvtColor(*_imgR, tmpR, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(tmpR, *_imgOutR, cv::COLOR_GRAY2RGB);
 }

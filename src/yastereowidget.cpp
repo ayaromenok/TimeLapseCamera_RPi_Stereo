@@ -9,17 +9,19 @@
 YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
-    setWindowSize();
-    setUI();
-    _timer = new QTimer(this);
-    connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 
+    _timer = new QTimer(this);
     _imp = new YaImageProcess(this);
 
+    setWindowSize();
+    setUI();
+
+    connect(_timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
     connect(_imp, SIGNAL(imageLReady()), this, SLOT(getImageL()));
     connect(_imp, SIGNAL(imageRReady()), this, SLOT(getImageR()));
 
     updateTimerInterval(_cbCtrlTimer->currentIndex());
+    updateProcessOp(_cbCtrlProcessOp->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -130,10 +132,10 @@ YaStereoWidget::setUI()
 
     _cbCtrlTimer = new QComboBox();
     _cbCtrlTimer->addItems(QStringList() << "Timer stopped" << "1 sec" << "2 sec"
-                           << "3 sec" << "4 sec" << "5 sec");
-    _cbCtrlTimer->setCurrentIndex(2);
+                           << "3 sec" << "4 sec" << "5 sec");    
     connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateTimerInterval);
+    _cbCtrlTimer->setCurrentIndex(2);
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
@@ -141,6 +143,7 @@ YaStereoWidget::setUI()
                                << "Op #4" << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
+    _cbCtrlProcessOp->setCurrentIndex(1);
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
     _lbCtrlImage = new QLabel("Control Image place");

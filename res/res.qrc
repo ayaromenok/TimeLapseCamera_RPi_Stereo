@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>test/imgCam13L.jpg</file>
         <file>test/imgCam13R.jpg</file>
+        <file>test/imgCam13RcheckBoard.jpg</file>
+        <file>test/imgCam13LcheckBoard.jpg</file>
+        <file>test/defaultR.jpg</file>
+        <file>test/defaultL.jpg</file>
     </qresource>
 </RCC>

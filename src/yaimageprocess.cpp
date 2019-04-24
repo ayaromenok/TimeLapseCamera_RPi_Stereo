@@ -84,34 +84,14 @@ YaImageProcess::process()
     getImages();
 
     switch (op) {
-    case OP_NOP:{
-        qInfo() << "OP_NOP";
-        break;
-    }
-    case OP_OP1:{
-        op1();
-        break;
-    }
-    case OP_OP2:{
-        op2();
-        break;
-    }
-    case OP_OP3:{
-        qInfo() << "OP_OP3 - not implemented for now";
-        break;
-    }
-    case OP_OP4:{
-        qInfo() << "OP_OP4 - not implemented for now";
-        break;
-    }
-    case OP_OP5:{
-        qInfo() << "OP_OP5 - not implemented for now";
-        break;
-    }
-    case OP_OP6:{
-        qInfo() << "OP_OP6 - not implemented for now";
-        break;
-    }
+    case OP_NOP:{ qInfo() << "OP_NOP"; break; }
+    case OP_OP1:{ op1(); break; }
+    case OP_OP2:{ op2(); break; }
+    case OP_OP3:{ op3(); break; }
+    case OP_OP4:{ op4(); break; }
+    case OP_OP5:{ op5(); break; }
+    case OP_OP6:{ op6(); break; }
+
     default:{
         qInfo() << "Operation not implemented";
         break;
@@ -138,4 +118,28 @@ YaImageProcess::op2()
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2HLS);
     cv::cvtColor(*_imgR, tmpR, cv::COLOR_BGR2GRAY);
     cv::cvtColor(tmpR, *_imgOutR, cv::COLOR_GRAY2RGB);
+}
+
+void
+YaImageProcess::op3()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+}
+
+void
+YaImageProcess::op4()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+}
+
+void
+YaImageProcess::op5()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+}
+
+void
+YaImageProcess::op6()
+{
+    qInfo() << __PRETTY_FUNCTION__;
 }

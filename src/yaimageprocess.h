@@ -46,6 +46,10 @@ public slots:
 private:
     void  op1();
     void  op2();
+    void  op3();
+    void  op4();
+    void  op5();
+    void  op6();
 
     YaStereoCam     *_cam;
     YaStereoTest    *_test;

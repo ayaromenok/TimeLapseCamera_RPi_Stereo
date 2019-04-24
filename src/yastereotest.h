@@ -27,6 +27,9 @@ public slots:
 private:
     cv::Mat             *_imgInL;
     cv::Mat             *_imgInR;
+    QImage              *_qimgInL;
+    QImage              *_qimgInR;
+    quint64             count;
 };
 
 #endif // YASTEREOTEST_H

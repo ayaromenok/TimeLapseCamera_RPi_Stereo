@@ -35,8 +35,12 @@ YaImageProcess::getImages()
 //    qInfo() << __PRETTY_FUNCTION__;
     if (src & SRC_TEST){
         _test->getImages();
+        _test->getImageL(*_imgL);
+        _test->getImageR(*_imgR);
     } else {
         _cam->capImages();
+        _cam->getImageL(*_imgL);
+        _cam->getImageR(*_imgR);
     }
 }
 
@@ -78,14 +82,6 @@ YaImageProcess::process()
 //    qInfo() << __PRETTY_FUNCTION__;
 
     getImages();
-
-    _cam->getImageL(*_imgL);
-    _cam->getImageR(*_imgR);
-
-//    qInfo() << "imgL" << _imgL->cols << _imgL->rows
-//            << "imgR" << _imgR->cols << _imgR->rows;
-
-
 
     switch (op) {
     case OP_NOP:{

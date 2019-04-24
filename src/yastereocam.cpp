@@ -40,7 +40,7 @@ YaStereoCam::capImages()
 {
 //    qInfo() << __PRETTY_FUNCTION__;
     count++;
-    qInfo() << "frame #" << count;
+    qInfo() << "cap frame #" << count;
     *_capL >> *_imgInL;
     if (_imgInL->empty()){
         qWarning() <<"\tImage/Left is empty #" << count;

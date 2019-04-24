@@ -22,6 +22,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 
     updateTimerInterval(_cbCtrlTimer->currentIndex());
     updateProcessOp(_cbCtrlProcessOp->currentIndex());
+    updateSource(_cbCtrlSource->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -127,7 +128,7 @@ YaStereoWidget::setUI()
     _cbCtrlSource->addItems(QStringList() << "Test Source" << "Camera Source");
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(1);
+    _cbCtrlSource->setCurrentIndex(0);
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();

@@ -124,6 +124,15 @@ void
 YaImageProcess::op3()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    cv::Mat grayL, grayR, cannyL, cannyR;
+
+    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
+    cv::Canny(grayL, cannyL, 400, 1000, 5);
+    cv::cvtColor(cannyL, *_imgOutL, cv::COLOR_GRAY2RGB);
+
+    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
+    cv::Canny(grayR, cannyR, 400, 1000, 7);
+    cv::cvtColor(cannyR, *_imgOutR, cv::COLOR_GRAY2RGB);
 }
 
 void

@@ -140,7 +140,7 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
-    _cbCtrlProcessOp->addItems(QStringList() << "Op #1" << "Op #2" << "Op #3"
+    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray " << "Canny filter"
                                << "Op #4" << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);

@@ -32,7 +32,7 @@ YaImageProcess::~YaImageProcess()
 void
 YaImageProcess::getImages()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+//    qInfo() << __PRETTY_FUNCTION__;
     if (op & SRC_TEST){
         _test->getImages();
     } else {
@@ -57,7 +57,7 @@ YaImageProcess::setSrcImage(SOURCE source)
 void
 YaImageProcess::getImageL(QImage &img)
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    //qInfo() << __PRETTY_FUNCTION__;
     QImage qimg(_imgOutL->ptr(), _imgOutL->cols, _imgOutL->rows,
                 _imgOutL->step, QImage::Format_RGB888);
     img = qimg;
@@ -66,7 +66,7 @@ YaImageProcess::getImageL(QImage &img)
 void
 YaImageProcess::getImageR(QImage &img)
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    //qInfo() << __PRETTY_FUNCTION__;
     QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
                 _imgOutR->step, QImage::Format_RGB888);
     img = qimg;
@@ -75,15 +75,15 @@ YaImageProcess::getImageR(QImage &img)
 void
 YaImageProcess::process()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+//    qInfo() << __PRETTY_FUNCTION__;
 
     getImages();
 
     _cam->getImageL(*_imgL);
     _cam->getImageR(*_imgR);
 
-    qInfo() << "imgL" << _imgL->cols << _imgL->rows
-            << "imgR" << _imgR->cols << _imgR->rows;
+//    qInfo() << "imgL" << _imgL->cols << _imgL->rows
+//            << "imgR" << _imgR->cols << _imgR->rows;
 
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
     cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);

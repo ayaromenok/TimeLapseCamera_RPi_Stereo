@@ -33,7 +33,7 @@ YaStereoWidget::~YaStereoWidget()
 void
 YaStereoWidget::getImageL()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    //qInfo() << __PRETTY_FUNCTION__;
     QImage imgL;
     _imp->getImageL(imgL);
     _lbImgL->setPixmap(QPixmap::fromImage(imgL).scaled(this->width()/3,this->width()/4));
@@ -42,7 +42,7 @@ YaStereoWidget::getImageL()
 void
 YaStereoWidget::getImageR()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    //qInfo() << __PRETTY_FUNCTION__;
     QImage imgR;
     _imp->getImageR(imgR);
     _lbImgR->setPixmap(QPixmap::fromImage(imgR).scaled(this->width()/3,this->width()/4));
@@ -51,7 +51,7 @@ YaStereoWidget::getImageR()
 void
 YaStereoWidget::timerUpdate()
 {
-    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
+//    qInfo() << "timer:" << QDateTime::currentSecsSinceEpoch();
     _imp->process();
 }
 

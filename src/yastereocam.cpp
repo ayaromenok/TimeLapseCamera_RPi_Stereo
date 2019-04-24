@@ -32,7 +32,7 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
 YaStereoCam::~YaStereoCam()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    qInfo() << "total number of captured frames" << count;
+    qInfo() << "total # of captured frames" << count;
 }
 
 void
@@ -40,7 +40,7 @@ YaStereoCam::capImages()
 {
 //    qInfo() << __PRETTY_FUNCTION__;
     count++;
-    qInfo() << "captured frame:" << count;
+    qInfo() << "frame #" << count;
     *_capL >> *_imgInL;
     if (_imgInL->empty()){
         qWarning() <<"\tImage/Left is empty #" << count;

@@ -125,7 +125,7 @@ YaStereoWidget::setUI()
                             << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(0);
+    _cbCtrlSource->setCurrentIndex(2);
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();

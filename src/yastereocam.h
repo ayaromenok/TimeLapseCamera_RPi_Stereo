@@ -33,6 +33,11 @@ private:
     cv::Mat             *_imgInL;
     cv::Mat             *_imgInR;
     quint64             count;
+
+    double             _camWidth;
+    double             _camHeight;
+    double             _camFrameCount;
+    double             _camFps;
 };
 
 #endif // YASTEREOCAM_H

@@ -9,15 +9,17 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     _capL = new cv::VideoCapture(0);
+
     _capL->set(cv::CAP_PROP_FRAME_WIDTH, 640);
     _capL->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+
     if(!_capL->isOpened()){
         qErrnoWarning("CV Camera/Left capture error");
         QCoreApplication::exit(-1);
     };
 #ifdef DEBUG_PC
     qInfo() << "use single cam as a right source too";
-#else
+#else //DEBUG_PC
     _capR = new cv::VideoCapture(1);
     _capR->set(cv::CAP_PROP_FRAME_WIDTH, 640);
     _capR->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
@@ -25,7 +27,8 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
         qErrnoWarning("CV Camera/Right capture error");
         QCoreApplication::exit(-1);
     }
-#endif
+#endif //DEBUG_PC
+    getCamProps();
     _imgInL = new cv::Mat(640,480,CV_8UC3);
     _imgInR = new cv::Mat(640,480,CV_8UC3);
     count = 0;
@@ -38,16 +41,34 @@ YaStereoCam::~YaStereoCam()
 }
 
 void
+YaStereoCam::getCamProps()
+{
+    _camLWidth = _capL->get(cv::CAP_PROP_FRAME_WIDTH);
+    _camLHeight = _capL->get(cv::CAP_PROP_FRAME_HEIGHT);
+    _camLFps = _capL->get(cv::CAP_PROP_FPS);
+#ifdef DEBUG_PC
+    _camRFps = _camLFps;
+    _camRWidth = _camLWidth;
+    _camRHeight = _camLHeight;
+#else //DEBUG_PC
+    _camRWidth = _capR->get(cv::CAP_PROP_FRAME_WIDTH);
+    _camRHeight = _capR->get(cv::CAP_PROP_FRAME_HEIGHT);
+    _camRFps = _capR->get(cv::CAP_PROP_FPS);
+#endif //DEBUG_PC
+}
+
+void
 YaStereoCam::capImages()
 {
 //    qInfo() << __PRETTY_FUNCTION__;
     count++;
     qInfo() << "cap frame #" << count;
-    *_capL >> *_imgInL;
+    *_capL >> *_imgInL;    
     if (_imgInL->empty()){
         qWarning() <<"\tImage/Left is empty #" << count;
         QCoreApplication::exit(-1);
     }
+
 #ifdef DEBUG_PC
     *_imgInR = *_imgInL;
 #else

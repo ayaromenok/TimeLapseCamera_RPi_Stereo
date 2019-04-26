@@ -142,7 +142,7 @@ YaImageProcess::op4()
 {
     qInfo() << __PRETTY_FUNCTION__ << "Checked Board";
     cv::Mat grayL, grayR;
-    cv::Mat outPointsL,outPointsR;
+    cv::Mat outPointsL, outPointsR;
 
     cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
     cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
@@ -168,7 +168,36 @@ YaImageProcess::op4()
 void
 YaImageProcess::op5()
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__ << "Camera Calibration";
+
+    cv::Mat grayL, grayR;
+    cv::Mat outPointsCornerL, outPointsCornerR;
+
+    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
+
+    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
+    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
+
+    if (cv::findChessboardCorners(*_imgL, cv::Size(4,6), outPointsCornerL))
+    {
+        cv::cornerSubPix(grayL, outPointsCornerL, cv::Size(7,7),
+                         cv::Size(-1,-1),
+                         cv::TermCriteria(cv::TermCriteria::EPS+cv::TermCriteria::COUNT, 30, 0.0001));
+        cv::drawChessboardCorners(*_imgOutL, cv::Size(4,6), outPointsCornerL, true);
+
+    } else {
+        qInfo() << "Left: can't find check board";
+    }
+
+    if (cv::findChessboardCorners(*_imgR, cv::Size(4,6), outPointsCornerR))
+    {
+        cv::drawChessboardCorners(*_imgOutR, cv::Size(4,6), outPointsCornerR, true);
+    } else {
+        qInfo() << "Right: can't find check board";
+    }
+    //std::cout << "camL" << outPointsCornerL << std::endl;
+    //std::cout << "camR" << outPointsCornerR << std::endl;
 }
 
 void

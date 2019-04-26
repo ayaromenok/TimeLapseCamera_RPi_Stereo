@@ -139,13 +139,13 @@ YaStereoWidget::setUI()
                            << "3 sec" << "4 sec" << "5 sec");    
     connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateTimerInterval);
-    _cbCtrlTimer->setCurrentIndex(_settings->value("UI/TimerInterval").toInt());
+    _cbCtrlTimer->setCurrentIndex(_settings->value("UI/timerInterval").toInt());
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
     _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray"
                                << "Canny filter" << "Checked Board"
-                               << "Op #5" << "Op #6");
+                               << "Camera Calibration" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
     _cbCtrlProcessOp->setCurrentIndex(_settings->value("UI/ProcessOp").toInt());

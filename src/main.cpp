@@ -9,7 +9,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    qInfo() << "TimeLapse Camera for Stereo";
+
+    QApplication::setOrganizationName("Andrey Yaromenok");
+    QApplication::setOrganizationDomain("andreyayromenok.info");
+    QApplication::setApplicationName("TimeLapse Camera for Stereo");
+    QApplication::setApplicationVersion("0.1.a");
+    qInfo() << QApplication::applicationName() << QApplication::applicationVersion();
+
     YaStereoWidget sw;
 
     sw.show();

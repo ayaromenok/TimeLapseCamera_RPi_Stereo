@@ -10,6 +10,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
 
+    _settings = new QSettings(this);
     _timer = new QTimer(this);
     _imp = new YaImageProcess(this);
 
@@ -29,6 +30,8 @@ YaStereoWidget::~YaStereoWidget()
 {
     qInfo() << __PRETTY_FUNCTION__;
     _timer->stop();
+    // since all classes are QObject delieverd and use this as a parent,
+    // they will be deleted automatically
 }
 
 void
@@ -61,6 +64,7 @@ YaStereoWidget::updateSource(int source)
 {
     qInfo() << "source:" << source;
     _imp->setSrcImage((YaImageProcess::SOURCE)(1<<source));
+    _settings->setValue("UI/source",source);
     timerUpdate();
 }
 
@@ -72,12 +76,14 @@ YaStereoWidget::updateTimerInterval(int index)
         _timer->setInterval(index*1000);
         _timer->start();
     }
+    _settings->setValue("UI/timerInterval",index);
 }
 
 void
 YaStereoWidget::updateProcessOp(int index)
 {
     _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
+    _settings->setValue("UI/ProcessOp",index);
 }
 
 void
@@ -125,7 +131,7 @@ YaStereoWidget::setUI()
                             << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(2);
+    _cbCtrlSource->setCurrentIndex(_settings->value("UI/source").toInt());
     _loutCtrl->addWidget(_cbCtrlSource);
 
     _cbCtrlTimer = new QComboBox();
@@ -133,7 +139,7 @@ YaStereoWidget::setUI()
                            << "3 sec" << "4 sec" << "5 sec");    
     connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateTimerInterval);
-    _cbCtrlTimer->setCurrentIndex(2);
+    _cbCtrlTimer->setCurrentIndex(_settings->value("UI/TimerInterval").toInt());
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
@@ -142,7 +148,7 @@ YaStereoWidget::setUI()
                                << "Op #5" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
-    _cbCtrlProcessOp->setCurrentIndex(3);
+    _cbCtrlProcessOp->setCurrentIndex(_settings->value("UI/ProcessOp").toInt());
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
     _lbCtrlImage = new QLabel("Place for Control Image");

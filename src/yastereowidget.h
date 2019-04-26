@@ -10,6 +10,7 @@ class QPushButton;
 class QImage;
 class QTimer;
 class QComboBox;
+class QSettings;
 
 class YaImageProcess;
 
@@ -54,6 +55,7 @@ private:
     QLabel                      *_lbCtrlImage;
 
     QTimer          *_timer;
+    QSettings       *_settings;
     YaImageProcess  *_imp;
 };
 

@@ -27,17 +27,21 @@ public slots:
     void getImageL(cv::Mat &img);
     void getImageR(cv::Mat &img);
 private:
-
+    void    getCamProps();
+    void    setCamProps();
     cv::VideoCapture    *_capL;
     cv::VideoCapture    *_capR;
     cv::Mat             *_imgInL;
     cv::Mat             *_imgInR;
     quint64             count;
 
-    double             _camWidth;
-    double             _camHeight;
-    double             _camFrameCount;
-    double             _camFps;
+    double             _camLWidth;
+    double             _camLHeight;
+    double             _camLFps;
+
+    double             _camRWidth;
+    double             _camRHeight;
+    double             _camRFps;
 };
 
 #endif // YASTEREOCAM_H

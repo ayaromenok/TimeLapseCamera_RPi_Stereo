@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QImage>
 #include <QCoreApplication>
+#include <QProcess>
 
 #include <opencv2/opencv.hpp>
 
@@ -29,6 +30,7 @@ YaStereoCam::YaStereoCam(QObject *parent) : QObject(parent)
     }
 #endif //DEBUG_PC
     getCamProps();
+    setCamProps();
     _imgInL = new cv::Mat(640,480,CV_8UC3);
     _imgInR = new cv::Mat(640,480,CV_8UC3);
     count = 0;
@@ -55,6 +57,31 @@ YaStereoCam::getCamProps()
     _camRHeight = _capR->get(cv::CAP_PROP_FRAME_HEIGHT);
     _camRFps = _capR->get(cv::CAP_PROP_FPS);
 #endif //DEBUG_PC
+    qInfo() << " camL" << _camLWidth << "x" << _camLHeight << "@" << _camLFps <<"\n"
+            << "camR" << _camRWidth << "x" << _camRHeight << "@" << _camRFps;
+}
+
+void
+YaStereoCam::setCamProps()
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    //https://www.raspberrypi.org/forums/viewtopic.php?t=62364
+    QProcess pr;
+    int res = QProcess::execute("v4l2-ctl", QStringList() << "--list-formats");
+    switch (res) {
+    case -1:{
+        qWarning() << "process crashed";
+        break;
+    }
+    case -2:{
+        qWarning() << "process cannot started";
+        break;
+    }
+    default:{
+        qInfo() << "process OK";
+        break;
+    }
+    }
 }
 
 void

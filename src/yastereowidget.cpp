@@ -62,18 +62,18 @@ YaStereoWidget::timerUpdate()
 void
 YaStereoWidget::updateSource(int source)
 {
-    qInfo() << "source:" << source;
+    qInfo() << __PRETTY_FUNCTION__ << source;
     _imp->setSrcImage((YaImageProcess::SOURCE)(1<<source));
     _settings->setValue("UI/source",source);
-    timerUpdate();
+    //timerUpdate();
 }
 void
 YaStereoWidget::updateSourceScale(int scale)
 {
-    qInfo() << "source scale:" << scale;
+    qInfo() << __PRETTY_FUNCTION__ << scale;
     _imp->setSrcImageScale(1<<scale);
     _settings->setValue("UI/sourceScale", scale);
-    timerUpdate();
+   // timerUpdate();
 }
 
 void

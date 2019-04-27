@@ -63,6 +63,7 @@ private:
     OPERATION       op;
     SOURCE          src;
     int             srcScale;
+    bool            srcTestChanged;
     cv::Mat         *_imgL;
     cv::Mat         *_imgR;
 

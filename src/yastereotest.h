@@ -42,11 +42,13 @@ public slots:
     void getImageR(QImage &img);
     void getImageL(cv::Mat &img);
     void getImageR(cv::Mat &img);
+
 private:
     cv::Mat             *_imgInL;
     cv::Mat             *_imgInR;
     QImage              *_qimgInL;
     QImage              *_qimgInR;
+    quint32             imgWidth;
     quint64             count;
     TEST_IMAGE          tImg;
     TEST_IMAGE_SIZE     tImgSize;

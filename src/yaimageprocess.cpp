@@ -21,6 +21,7 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     _imgOutR = new cv::Mat;
     countImgPtL = 0;
     countImgPtR = 0;
+    srcTestChanged = true;
 }
 
 YaImageProcess::~YaImageProcess()
@@ -42,8 +43,11 @@ YaImageProcess::getImages()
         _cam->getImageR(*_imgR);
 
     } else {
-        _test->setTestImage((YaStereoTest::TEST_IMAGE) src);
-        _test->setTestImageSize((YaStereoTest::TEST_IMAGE_SIZE) srcScale);
+        if(srcTestChanged){
+            _test->setTestImageSize((YaStereoTest::TEST_IMAGE_SIZE) srcScale);
+            _test->setTestImage((YaStereoTest::TEST_IMAGE) src);
+            srcTestChanged = false;
+        }
         _test->getImages();
         _test->getImageL(*_imgL);
         _test->getImageR(*_imgR);
@@ -54,7 +58,7 @@ void
 YaImageProcess::setOpImage(OPERATION operation)
 {
     qInfo() << __PRETTY_FUNCTION__ << operation;
-    op = operation;
+    op = operation;    
 }
 
 void
@@ -62,6 +66,7 @@ YaImageProcess::setSrcImageScale(int scale)
 {
     qInfo() << __PRETTY_FUNCTION__ << scale;
     srcScale = scale;
+    srcTestChanged = true;
 }
 
 void
@@ -69,6 +74,7 @@ YaImageProcess::setSrcImage(SOURCE source)
 {
     qInfo() << __PRETTY_FUNCTION__ << source;
     src = source;
+    srcTestChanged = true;
 }
 
 void

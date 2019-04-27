@@ -10,6 +10,7 @@ YaStereoTest::YaStereoTest(QObject *parent) : QObject(parent)
     _qimgInL = new QImage(":/test/defaultL.jpg");
     _qimgInR = new QImage(":/test/defaultR.jpg");
     count = 0;
+    imgWidth = _qimgInL->width();
     imgScale = 1.0;
     tImg = BALKONY_HSIZE;
     tImgSize = FULL;
@@ -80,6 +81,7 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
     case BALKONY_HSIZE:{
         tmpL = QImage(":/test/imgCam13L.jpg");
         tmpR = QImage(":/test/imgCam13R.jpg");
+
         break;
     }
     case CHK_BOARD_HSIZE:{
@@ -94,6 +96,8 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
         break;
     }
     }
+    imgWidth = tmpL.width();
+    setTestImageSize(tImgSize);
     _qimgInL = new QImage(tmpL.scaledToWidth((int)tmpL.width()*imgScale, Qt::SmoothTransformation));
     _qimgInR = new QImage(tmpR.scaledToWidth((int)tmpR.width()*imgScale,Qt::SmoothTransformation));
 }
@@ -122,19 +126,19 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
         break;
     }
     case TEST_IMAGE_SIZE::W160xH120:{
-        imgScale = (double)160.0/_qimgInL->width();
+        imgScale = (double)160.0/imgWidth;
         break;
     }
     case TEST_IMAGE_SIZE::W320xH240:{
-        imgScale = (double) 320.0/_qimgInL->width();
+        imgScale = (double) 320.0/imgWidth;
         break;
     }
     case TEST_IMAGE_SIZE::W640xH480:{
-        imgScale = (double) 640.0/_qimgInL->width();
+        imgScale = (double) 640.0/imgWidth;
         break;
     }
     case TEST_IMAGE_SIZE::W1280xH960:{
-        imgScale = (double)1280.0/_qimgInL->width();
+        imgScale = (double)1280.0/imgWidth;
         break;
     }
     default:{

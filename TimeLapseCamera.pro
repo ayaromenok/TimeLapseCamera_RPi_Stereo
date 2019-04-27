@@ -12,12 +12,16 @@ CONFIG += c++11
 
 SOURCES += \
         src/main.cpp \
+        src/op/yaimgprocop.cpp \
+        src/op/yaipocanny.cpp \
         src/yaimageprocess.cpp \
         src/yastereocam.cpp \
         src/yastereotest.cpp \
         src/yastereowidget.cpp
 
 HEADERS += \
+        src/op/yaimgprocop.h \
+        src/op/yaipocanny.h \
         src/yaimageprocess.h \
         src/yastereocam.h \
         src/yastereotest.h \

@@ -1,6 +1,8 @@
 #include "yaimageprocess.h"
 #include "yastereocam.h"
 #include "yastereotest.h"
+#include "op/yaimgprocop.h"
+#include "op/yaipocanny.h"
 
 #include <QDebug>
 #include <QImage>
@@ -22,6 +24,7 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     countImgPtL = 0;
     countImgPtR = 0;
     srcTestChanged = true;
+    _ipoCanny = new YaIpoCanny();
 }
 
 YaImageProcess::~YaImageProcess()
@@ -31,6 +34,7 @@ YaImageProcess::~YaImageProcess()
     delete _imgR;
     delete _imgOutL;
     delete _imgOutR;
+    delete _ipoCanny;
 }
 
 void
@@ -272,4 +276,5 @@ void
 YaImageProcess::op6()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    _ipoCanny->process();
 }

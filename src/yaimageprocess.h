@@ -6,6 +6,9 @@
 
 class YaStereoCam;
 class YaStereoTest;
+class YaImgProcOp;
+class YaIpoCanny;
+
 namespace cv {
     class Mat;
     class VideoCapture;
@@ -75,6 +78,8 @@ private:
 
     quint32         countImgPtR;
     std::vector<std::vector<cv::Point2f>>   imgPtR;
+
+    YaIpoCanny      *_ipoCanny;
 };
 
 #endif // YAIMAGEPROCESS_H

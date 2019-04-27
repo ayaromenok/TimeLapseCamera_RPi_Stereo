@@ -2,6 +2,8 @@
 #define YAIMAGEPROCESS_H
 
 #include <QObject>
+#include <opencv2/core.hpp>
+
 class YaStereoCam;
 class YaStereoTest;
 namespace cv {
@@ -53,6 +55,7 @@ private:
     void  op4();
     void  op5();
     void  op6();
+    void  getImage(QImage &img,bool isLetf = true);
 
     YaStereoCam     *_cam;
     YaStereoTest    *_test;
@@ -63,6 +66,12 @@ private:
 
     cv::Mat         *_imgOutL;
     cv::Mat         *_imgOutR;
+
+    quint32         countImgPtL;
+    std::vector<std::vector<cv::Point2f>>   imgPtL;
+
+    quint32         countImgPtR;
+    std::vector<std::vector<cv::Point2f>>   imgPtR;
 };
 
 #endif // YAIMAGEPROCESS_H

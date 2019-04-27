@@ -18,6 +18,8 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     _imgR = new cv::Mat;
     _imgOutL = new cv::Mat;
     _imgOutR = new cv::Mat;
+    countImgPtL = 0;
+    countImgPtR = 0;
 }
 
 YaImageProcess::~YaImageProcess()
@@ -63,21 +65,73 @@ YaImageProcess::setSrcImage(SOURCE source)
 void
 YaImageProcess::getImageL(QImage &img)
 {
-    //qInfo() << __PRETTY_FUNCTION__;
-    QImage qimg(_imgOutL->ptr(), _imgOutL->cols, _imgOutL->rows,
-                _imgOutL->step, QImage::Format_RGB888);
-    img = qimg;
+    getImage(img, true);
 }
 
 void
 YaImageProcess::getImageR(QImage &img)
 {
-    //qInfo() << __PRETTY_FUNCTION__;
-    QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
-                _imgOutR->step, QImage::Format_RGB888);
-    img = qimg;
+//    //qInfo() << __PRETTY_FUNCTION__;
+//    QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
+//                _imgOutR->step, QImage::Format_RGB888);
+//    img = qimg;
+    getImage(img, false);
 }
 
+void
+YaImageProcess::getImage(QImage &img,bool isLeft)
+{
+    //qInfo() << __PRETTY_FUNCTION__;
+    int imgDepth = 0;
+    int imgChannel = 0;
+    QImage::Format format = QImage::Format_RGB888;
+
+    if (isLeft){
+        imgDepth = _imgOutL->depth();
+        imgChannel = _imgOutL->channels();
+    } else {
+        imgDepth = _imgOutR->depth();
+        imgChannel = _imgOutR->channels();
+    }
+
+    if(0 == imgDepth){
+        switch (imgChannel) {
+        case(1):{
+            format = QImage::Format_Grayscale8;
+            break;
+        }
+        case(2):{
+            qWarning() << "Qt don't support 2 channel image: need 1 or 3";
+            return;
+        }
+        case(3):{
+            format = QImage::Format_RGB888;
+            break;
+        }
+        case(4):{
+            format = QImage::Format_RGBA8888;
+            break;
+        }
+        default:{
+            qInfo() << "Something wrong with cv:Mat channels";
+            return;
+        }
+        }
+    } else {
+        qInfo() << "cv::Mat.depth" << _imgOutL->depth();
+        qInfo() << "cv::Mat with more than 8U bit/channel not supported yet";
+    }
+
+    if (isLeft){
+        QImage qimg(_imgOutL->ptr(), _imgOutL->cols, _imgOutL->rows,
+                    _imgOutL->step, format);
+        img = qimg;
+    } else {
+        QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
+                    _imgOutR->step, format);
+        img = qimg;
+    }
+}
 void
 YaImageProcess::process()
 {
@@ -117,9 +171,9 @@ YaImageProcess::op2()
 {
     qInfo() << __PRETTY_FUNCTION__ << "BGR 2 HLS/Gray";
     cv::Mat tmpR;
-    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2HLS);
-    cv::cvtColor(*_imgR, tmpR, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(tmpR, *_imgOutR, cv::COLOR_GRAY2RGB);
+    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2HLS);
+    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2GRAY);
+
 }
 
 void
@@ -129,12 +183,10 @@ YaImageProcess::op3()
     cv::Mat grayL, grayR, cannyL, cannyR;
 
     cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayL, cannyL, 400, 1000, 5);
-    cv::cvtColor(cannyL, *_imgOutL, cv::COLOR_GRAY2RGB);
+    cv::Canny(grayL, *_imgOutL, 400, 1000, 5);
 
     cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayR, cannyR, 400, 1000, 7);
-    cv::cvtColor(cannyR, *_imgOutR, cv::COLOR_GRAY2RGB);
+    cv::Canny(grayR, *_imgOutR, 400, 1000, 7);
 }
 
 void

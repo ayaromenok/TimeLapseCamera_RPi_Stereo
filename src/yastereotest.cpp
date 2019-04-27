@@ -7,9 +7,12 @@
 YaStereoTest::YaStereoTest(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
-    _qimgInL = new QImage(":/test/imgCam13L.jpg");
-    _qimgInR = new QImage(":/test/imgCam13R.jpg");
+    _qimgInL = new QImage(":/test/defaultL.jpg");
+    _qimgInR = new QImage(":/test/defaultR.jpg");
     count = 0;
+    imgScale = 1.0;
+    tImg = BALKONY_HSIZE;
+    tImgSize = FULL;
 }
 
 YaStereoTest::~YaStereoTest()
@@ -19,6 +22,7 @@ YaStereoTest::~YaStereoTest()
     delete _qimgInR;
     qInfo() << "total # of test frames" << count;
 }
+
 void
 YaStereoTest::getImages()
 {
@@ -62,6 +66,7 @@ void
 YaStereoTest::setTestImage(TEST_IMAGE img)
 {
     qInfo() << __PRETTY_FUNCTION__ << img;
+    QImage tmpL, tmpR;
     if (tImg == img){
         qInfo() << "same test image as before";
         return;
@@ -73,22 +78,68 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
 
     switch (tImg) {
     case BALKONY_HSIZE:{
-        _qimgInL = new QImage(":/test/imgCam13L.jpg");
-        _qimgInR = new QImage(":/test/imgCam13R.jpg");
+        tmpL = QImage(":/test/imgCam13L.jpg");
+        tmpR = QImage(":/test/imgCam13R.jpg");
         break;
     }
     case CHK_BOARD_HSIZE:{
-        _qimgInL = new QImage(":/test/imgCam13LcheckBoard.jpg");
-        _qimgInR = new QImage(":/test/imgCam13RcheckBoard.jpg");
+        tmpL = QImage(":/test/imgCam13LcheckBoard.jpg");
+        tmpR = QImage(":/test/imgCam13RcheckBoard.jpg");
         break;
     }
     default:{
         qInfo() << "default images";
-        _qimgInL = new QImage(":/test/defaultL.jpg");
-        _qimgInR = new QImage(":/test/defaultR.jpg");
+        tmpL = QImage(":/test/defaultL.jpg");
+        tmpR = QImage(":/test/defaultR.jpg");
         break;
     }
     }
-
+    _qimgInL = new QImage(tmpL.scaledToWidth((int)tmpL.width()*imgScale, Qt::SmoothTransformation));
+    _qimgInR = new QImage(tmpR.scaledToWidth((int)tmpR.width()*imgScale,Qt::SmoothTransformation));
 }
 
+ void
+ YaStereoTest::setTestImageSize(TEST_IMAGE_SIZE size)
+ {
+    qInfo() << __PRETTY_FUNCTION__ << size;
+    tImgSize = size;
+
+    switch (size) {
+    case TEST_IMAGE_SIZE::FULL:{
+        imgScale = 1.0;
+        break;
+    }
+    case TEST_IMAGE_SIZE::HALF:{
+        imgScale = 0.5;
+        break;
+    }
+    case TEST_IMAGE_SIZE::QUARTER:{
+        imgScale = 0.25;
+        break;
+    }
+    case TEST_IMAGE_SIZE::DOUBLE:{
+        imgScale = 2.0;
+        break;
+    }
+    case TEST_IMAGE_SIZE::W160xH120:{
+        imgScale = (double)_qimgInL->width()/160;
+        break;
+    }
+    case TEST_IMAGE_SIZE::W320xH240:{
+        imgScale = (double)_qimgInL->width()/160;
+        break;
+    }
+    case TEST_IMAGE_SIZE::W640xH480:{
+        imgScale = (double)_qimgInL->width()/160;
+        break;
+    }
+    case TEST_IMAGE_SIZE::W1280xH960:{
+        imgScale = (double)_qimgInL->width()/160;
+        break;
+    }
+    default:{
+        imgScale = 1.0;
+        break;
+    }
+    }
+ }

@@ -238,20 +238,21 @@ YaImageProcess::op5()
     qInfo() << __PRETTY_FUNCTION__ << "Camera Calibration";
 
     cv::Mat grayL, grayR;
-    cv::Mat outPointsCornerL, outPointsCornerR;
+    std::vector<cv::Point2f>  outPointsCornerL, outPointsCornerR;
 
     cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
     cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
 
     cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
     cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
-
+    //CALIB_CB_FAST_CHECK for FishEye cams!;
     if (cv::findChessboardCorners(*_imgL, cv::Size(4,6), outPointsCornerL))
     {
         cv::cornerSubPix(grayL, outPointsCornerL, cv::Size(7,7),
                          cv::Size(-1,-1),
                          cv::TermCriteria(cv::TermCriteria::EPS+cv::TermCriteria::COUNT, 30, 0.0001));
         cv::drawChessboardCorners(*_imgOutL, cv::Size(4,6), outPointsCornerL, true);
+        imgPtL.push_back(outPointsCornerL);
 
     } else {
         qInfo() << "Left: can't find check board";

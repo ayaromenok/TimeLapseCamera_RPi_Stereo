@@ -24,6 +24,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     updateTimerInterval(_cbCtrlTimer->currentIndex());
     updateProcessOp(_cbCtrlProcessOp->currentIndex());
     updateSource(_cbCtrlSource->currentIndex());
+    updateSourceScale(_cbCtrlSourceScale->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
@@ -65,15 +66,16 @@ YaStereoWidget::updateSource(int source)
     qInfo() << __PRETTY_FUNCTION__ << source;
     _imp->setSrcImage((YaImageProcess::SOURCE)(1<<source));
     _settings->setValue("UI/source",source);
-    //timerUpdate();
+    timerUpdate();
 }
+
 void
 YaStereoWidget::updateSourceScale(int scale)
 {
     qInfo() << __PRETTY_FUNCTION__ << scale;
     _imp->setSrcImageScale(1<<scale);
     _settings->setValue("UI/sourceScale", scale);
-   // timerUpdate();
+    timerUpdate();
 }
 
 void
@@ -92,6 +94,7 @@ YaStereoWidget::updateProcessOp(int index)
 {
     _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
     _settings->setValue("UI/ProcessOp",index);
+    timerUpdate();
 }
 
 void

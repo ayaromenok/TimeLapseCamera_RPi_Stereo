@@ -10,6 +10,7 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
 
+    _settings = new QSettings(this);
     _timer = new QTimer(this);
     _imp = new YaImageProcess(this);
 
@@ -23,12 +24,15 @@ YaStereoWidget::YaStereoWidget(QWidget *parent) : QWidget(parent)
     updateTimerInterval(_cbCtrlTimer->currentIndex());
     updateProcessOp(_cbCtrlProcessOp->currentIndex());
     updateSource(_cbCtrlSource->currentIndex());
+    updateSourceScale(_cbCtrlSourceScale->currentIndex());
 }
 
 YaStereoWidget::~YaStereoWidget()
 {
     qInfo() << __PRETTY_FUNCTION__;
     _timer->stop();
+    // since all classes are QObject delieverd and use this as a parent,
+    // they will be deleted automatically
 }
 
 void
@@ -59,12 +63,18 @@ YaStereoWidget::timerUpdate()
 void
 YaStereoWidget::updateSource(int source)
 {
-    qInfo() << "source:" << source;
-    if (0 == source){
-        _imp->setSrcImage(YaImageProcess::SRC_TEST);
-    } else {
-        _imp->setSrcImage(YaImageProcess::SRC_CAM);
-    }
+    qInfo() << __PRETTY_FUNCTION__ << source;
+    _imp->setSrcImage((YaImageProcess::SOURCE)(1<<source));
+    _settings->setValue("UI/source",source);
+    timerUpdate();
+}
+
+void
+YaStereoWidget::updateSourceScale(int scale)
+{
+    qInfo() << __PRETTY_FUNCTION__ << scale;
+    _imp->setSrcImageScale(1<<scale);
+    _settings->setValue("UI/sourceScale", scale);
     timerUpdate();
 }
 
@@ -76,12 +86,15 @@ YaStereoWidget::updateTimerInterval(int index)
         _timer->setInterval(index*1000);
         _timer->start();
     }
+    _settings->setValue("UI/timerInterval",index);
 }
 
 void
 YaStereoWidget::updateProcessOp(int index)
 {
     _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
+    _settings->setValue("UI/ProcessOp",index);
+    timerUpdate();
 }
 
 void
@@ -93,7 +106,7 @@ YaStereoWidget::setWindowSize()
 #endif //DEBUG_RPI_V7L
 
 #ifdef DEBUG_PC
-    this->setGeometry(100,100,854,480);
+    this->setGeometry(0, 0,1280,720);
 #endif //DEBUG_PC
 }
 
@@ -125,29 +138,41 @@ YaStereoWidget::setUI()
     _loutCtrl->addWidget(_pbCtrlProcess);
 
     _cbCtrlSource = new QComboBox();
-    _cbCtrlSource->addItems(QStringList() << "Test Source" << "Camera Source");
+    _cbCtrlSource->addItems(QStringList() << "Camera Source" << "Test: Balkony"
+                            << "Test: Checked Board" );
     connect(_cbCtrlSource, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateSource);    
-    _cbCtrlSource->setCurrentIndex(0);
+    _cbCtrlSource->setCurrentIndex(_settings->value("UI/source").toInt());
     _loutCtrl->addWidget(_cbCtrlSource);
+
+    _cbCtrlSourceScale = new QComboBox();
+    _cbCtrlSourceScale->addItems(QStringList() << "No Scale" << "Scale 1/2"
+                                 << "Scale 1/4" << "Scale 2x" << "Scale 160x120 px"
+                                 << "Scale 320x240 px" << "Scale 640x480 px"
+                                 << "Scale 1280x960 px");
+    connect(_cbCtrlSourceScale, QOverload<int>::of(&QComboBox::activated),
+          this, &YaStereoWidget::updateSourceScale);
+    _cbCtrlSourceScale->setCurrentIndex(_settings->value("UI/sourceScale").toInt());
+    _loutCtrl->addWidget(_cbCtrlSourceScale);
 
     _cbCtrlTimer = new QComboBox();
     _cbCtrlTimer->addItems(QStringList() << "Timer stopped" << "1 sec" << "2 sec"
                            << "3 sec" << "4 sec" << "5 sec");    
     connect(_cbCtrlTimer, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateTimerInterval);
-    _cbCtrlTimer->setCurrentIndex(2);
+    _cbCtrlTimer->setCurrentIndex(_settings->value("UI/timerInterval").toInt());
     _loutCtrl->addWidget(_cbCtrlTimer);
 
     _cbCtrlProcessOp = new QComboBox();
-    _cbCtrlProcessOp->addItems(QStringList() << "Op #1" << "Op #2" << "Op #3"
-                               << "Op #4" << "Op #5" << "Op #6");
+    _cbCtrlProcessOp->addItems(QStringList() << "BGR 2 RGB" << "BGR 2 HLS/Gray"
+                               << "Canny filter" << "Checked Board"
+                               << "Camera Calibration" << "Op #6");
     connect(_cbCtrlProcessOp, QOverload<int>::of(&QComboBox::activated),
           this, &YaStereoWidget::updateProcessOp);
-    _cbCtrlProcessOp->setCurrentIndex(0);
+    _cbCtrlProcessOp->setCurrentIndex(_settings->value("UI/ProcessOp").toInt());
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
-    _lbCtrlImage = new QLabel("Control Image place");
+    _lbCtrlImage = new QLabel("Place for Control Image");
     _loutCtrl->addWidget(_lbCtrlImage);
     _gbCtrl->setLayout(_loutCtrl);
 

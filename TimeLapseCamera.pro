@@ -36,7 +36,7 @@ equals(QMAKE_HOST.os, Linux) {
     INCLUDEPATH += $${CVLINUX}/include/opencv4
     LIBS += -L$${CVLINUX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
-    LIBS += -lopencv_highgui -lopencv_videoio
+    LIBS += -lopencv_highgui -lopencv_videoio -lopencv_calib3d
 
     equals(QMAKE_HOST.arch, x86_64){
         DEFINES += DEBUG_PC

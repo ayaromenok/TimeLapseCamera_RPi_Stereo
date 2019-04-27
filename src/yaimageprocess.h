@@ -44,6 +44,7 @@ public slots:
     void getImages();
     void setOpImage(OPERATION operation);
     void setSrcImage(SOURCE source);
+    void setSrcImageScale(int scale);
     void getImageL(QImage &imgL);
     void getImageR(QImage &imgR);
     void process();
@@ -61,6 +62,7 @@ private:
     YaStereoTest    *_test;
     OPERATION       op;
     SOURCE          src;
+    int             srcScale;
     cv::Mat         *_imgL;
     cv::Mat         *_imgR;
 

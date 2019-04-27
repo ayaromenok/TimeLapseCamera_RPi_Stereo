@@ -67,6 +67,14 @@ YaStereoWidget::updateSource(int source)
     _settings->setValue("UI/source",source);
     timerUpdate();
 }
+void
+YaStereoWidget::updateSourceScale(int scale)
+{
+    qInfo() << "source scale:" << scale;
+    _imp->setSrcImageScale(1<<scale);
+    _settings->setValue("UI/sourceScale", scale);
+    timerUpdate();
+}
 
 void
 YaStereoWidget::updateTimerInterval(int index)
@@ -133,6 +141,16 @@ YaStereoWidget::setUI()
           this, &YaStereoWidget::updateSource);    
     _cbCtrlSource->setCurrentIndex(_settings->value("UI/source").toInt());
     _loutCtrl->addWidget(_cbCtrlSource);
+
+    _cbCtrlSourceScale = new QComboBox();
+    _cbCtrlSourceScale->addItems(QStringList() << "No Scale" << "Scale 1/2"
+                                 << "Scale 1/4" << "Scale 2x" << "Scale 160x120 px"
+                                 << "Scale 320x240 px" << "Scale 640x480 px"
+                                 << "Scale 1280x960 px");
+    connect(_cbCtrlSourceScale, QOverload<int>::of(&QComboBox::activated),
+          this, &YaStereoWidget::updateSourceScale);
+    _cbCtrlSourceScale->setCurrentIndex(_settings->value("UI/sourceScale").toInt());
+    _loutCtrl->addWidget(_cbCtrlSourceScale);
 
     _cbCtrlTimer = new QComboBox();
     _cbCtrlTimer->addItems(QStringList() << "Timer stopped" << "1 sec" << "2 sec"

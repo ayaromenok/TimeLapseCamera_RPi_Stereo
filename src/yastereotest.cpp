@@ -67,10 +67,10 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
 {
     qInfo() << __PRETTY_FUNCTION__ << img;
     QImage tmpL, tmpR;
-    if (tImg == img){
-        qInfo() << "same test image as before";
-        return;
-    }
+//    if (tImg == img){
+//        qInfo() << "same test image as before";
+//        return;
+//    }
     tImg = img;
 
     delete _qimgInL;
@@ -122,24 +122,27 @@ YaStereoTest::setTestImage(TEST_IMAGE img)
         break;
     }
     case TEST_IMAGE_SIZE::W160xH120:{
-        imgScale = (double)_qimgInL->width()/160;
+        imgScale = (double)160.0/_qimgInL->width();
         break;
     }
     case TEST_IMAGE_SIZE::W320xH240:{
-        imgScale = (double)_qimgInL->width()/160;
+        imgScale = (double) 320.0/_qimgInL->width();
         break;
     }
     case TEST_IMAGE_SIZE::W640xH480:{
-        imgScale = (double)_qimgInL->width()/160;
+        imgScale = (double) 640.0/_qimgInL->width();
         break;
     }
     case TEST_IMAGE_SIZE::W1280xH960:{
-        imgScale = (double)_qimgInL->width()/160;
+        imgScale = (double)1280.0/_qimgInL->width();
         break;
     }
     default:{
         imgScale = 1.0;
+        qWarning() << "worng place for scale";
         break;
     }
     }
- }
+    qInfo() << "test Image Scale" << imgScale;
+    //setTestImage(tImg);
+}

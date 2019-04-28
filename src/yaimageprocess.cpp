@@ -214,7 +214,7 @@ void
 YaImageProcess::op4()
 {
     QMap<QString, QVariant> p;
-    //p["sizeXL"] = 4;
+    p["sizeXL"] = 4;
     p["sizeYL"] = 6;
     p["sizeXR"] = 4;
     p["sizeYR"] = 6;

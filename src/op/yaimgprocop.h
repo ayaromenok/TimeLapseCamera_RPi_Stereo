@@ -17,7 +17,7 @@ signals:
 public slots:
     virtual void setParams(QMap<QString, QVariant> &params);
     virtual void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);
-
+    void dumpParamsToCon();
 protected:
     QMap<QString, QVariant> _p;
 };

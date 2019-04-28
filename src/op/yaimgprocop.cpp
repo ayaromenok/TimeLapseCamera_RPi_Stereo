@@ -29,3 +29,12 @@ YaImgProcOp::setParams(QMap<QString, QVariant> &params)
     }
 }
 
+void
+YaImgProcOp::dumpParamsToCon()
+{
+    QMapIterator<QString, QVariant> i(_p);
+    while (i.hasNext()) {
+        i.next();
+        qInfo() << i.key() << ": " << i.value();
+    }
+}

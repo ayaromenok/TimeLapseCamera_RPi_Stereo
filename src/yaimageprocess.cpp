@@ -1,6 +1,9 @@
 #include "yaimageprocess.h"
 #include "yastereocam.h"
 #include "yastereotest.h"
+#include "op/yaimgprocop.h"
+#include "op/yaipocanny.h"
+#include "op/yaipochessboard.h"
 
 #include <QDebug>
 #include <QImage>
@@ -22,6 +25,9 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     countImgPtL = 0;
     countImgPtR = 0;
     srcTestChanged = true;
+    _ipo = new YaImgProcOp(this);
+    _ipoCanny = new YaIpoCanny(_ipo);
+    _ipoChBoard = new YaIpoChessBoard(_ipo);
 }
 
 YaImageProcess::~YaImageProcess()
@@ -86,15 +92,11 @@ YaImageProcess::getImageL(QImage &img)
 void
 YaImageProcess::getImageR(QImage &img)
 {
-//    //qInfo() << __PRETTY_FUNCTION__;
-//    QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
-//                _imgOutR->step, QImage::Format_RGB888);
-//    img = qimg;
     getImage(img, false);
 }
 
 void
-YaImageProcess::getImage(QImage &img,bool isLeft)
+YaImageProcess::getImage(QImage &img, bool isLeft)
 {
     //qInfo() << __PRETTY_FUNCTION__;
     int imgDepth = 0;
@@ -150,8 +152,6 @@ YaImageProcess::getImage(QImage &img,bool isLeft)
 void
 YaImageProcess::process()
 {
-//    qInfo() << __PRETTY_FUNCTION__;
-
     getImages();
 
     switch (op) {
@@ -194,42 +194,34 @@ YaImageProcess::op2()
 void
 YaImageProcess::op3()
 {
-    qInfo() << __PRETTY_FUNCTION__ << "Canny filter";
-    cv::Mat grayL, grayR, cannyL, cannyR;
+    QMap<QString, QVariant> p;
 
-    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayL, *_imgOutL, 400, 1000, 5);
+    p["lowThresholdL"] = 400;
+    p["ratioL"]        = 2.5;
+    p["kernelSizeL"]   = 5;
 
-    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayR, *_imgOutR, 400, 1000, 7);
+    p["lowThresholdR"] = 200;
+    p["ratioR"]        = 10.0;
+    p["kernelSizeR"]   = 5;
+
+    p["dumpParamsToCon"] = false;
+
+    _ipoCanny->setParams(p);
+    _ipoCanny->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 
 void
 YaImageProcess::op4()
 {
-    qInfo() << __PRETTY_FUNCTION__ << "Checked Board";
-    cv::Mat grayL, grayR;
-    cv::Mat outPointsL, outPointsR;
+    QMap<QString, QVariant> p;
+    p["sizeXL"] = 4;
+    p["sizeYL"] = 6;
+    p["sizeXR"] = 4;
+    p["sizeYR"] = 6;
+    p["dumpParamsToCon"] = false;
 
-    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
-
-    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
-    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
-
-    if (cv::findChessboardCorners(*_imgL, cv::Size(4,6), outPointsL))
-    {
-        cv::drawChessboardCorners(*_imgOutL, cv::Size(4,6), outPointsL, true);
-    } else {
-        qInfo() << "Left: can't find check board";
-    }
-
-    if (cv::findChessboardCorners(*_imgR, cv::Size(4,6), outPointsR))
-    {
-        cv::drawChessboardCorners(*_imgOutR, cv::Size(4,6), outPointsR, true);
-    } else {
-        qInfo() << "Right: can't find check board";
-    }
+    _ipoChBoard->setParams(p);
+    _ipoChBoard->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 
 void
@@ -272,4 +264,5 @@ void
 YaImageProcess::op6()
 {
     qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << "No Op6 for now";
 }

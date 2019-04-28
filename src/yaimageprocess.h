@@ -6,6 +6,10 @@
 
 class YaStereoCam;
 class YaStereoTest;
+class YaImgProcOp;
+class YaIpoCanny;
+class YaIpoChessBoard;
+
 namespace cv {
     class Mat;
     class VideoCapture;
@@ -56,7 +60,7 @@ private:
     void  op4();
     void  op5();
     void  op6();
-    void  getImage(QImage &img,bool isLetf = true);
+    void  getImage(QImage &img, bool isLetf = true);
 
     YaStereoCam     *_cam;
     YaStereoTest    *_test;
@@ -75,6 +79,10 @@ private:
 
     quint32         countImgPtR;
     std::vector<std::vector<cv::Point2f>>   imgPtR;
+
+    YaImgProcOp     *_ipo;
+    YaIpoCanny      *_ipoCanny;
+    YaIpoChessBoard *_ipoChBoard;
 };
 
 #endif // YAIMAGEPROCESS_H

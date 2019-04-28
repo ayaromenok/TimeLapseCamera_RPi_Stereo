@@ -204,7 +204,7 @@ YaImageProcess::op3()
     p["ratioR"]        = 10.0;
     p["kernelSizeR"]   = 5;
 
-    p["dumpParamsToCon"] = true;
+    p["dumpParamsToCon"] = false;
 
     _ipoCanny->setParams(p);
     _ipoCanny->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
@@ -212,7 +212,15 @@ YaImageProcess::op3()
 
 void
 YaImageProcess::op4()
-{    
+{
+    QMap<QString, QVariant> p;
+    //p["sizeXL"] = 4;
+    p["sizeYL"] = 6;
+    p["sizeXR"] = 4;
+    p["sizeYR"] = 6;
+    p["dumpParamsToCon"] = false;
+
+    _ipoChBoard->setParams(p);
     _ipoChBoard->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 

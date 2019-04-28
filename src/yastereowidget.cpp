@@ -172,6 +172,10 @@ YaStereoWidget::setUI()
     _cbCtrlProcessOp->setCurrentIndex(_settings->value("UI/ProcessOp").toInt());
     _loutCtrl->addWidget(_cbCtrlProcessOp);
 
+    _gbCtrlIpO = new QGroupBox("Controls for IpO");
+    _gbCtrlIpO->setGeometry(0,0, 100, 50);
+    _loutCtrl->addWidget(_gbCtrlIpO);
+
     _lbCtrlImage = new QLabel("Place for Control Image");
     _loutCtrl->addWidget(_lbCtrlImage);
     _gbCtrl->setLayout(_loutCtrl);

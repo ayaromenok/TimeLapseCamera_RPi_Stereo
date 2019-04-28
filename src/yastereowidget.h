@@ -55,6 +55,7 @@ private:
     QComboBox                   *_cbCtrlTimer;
     QComboBox                   *_cbCtrlProcessOp;
     QLabel                      *_lbCtrlImage;
+    QGroupBox               *_gbCtrlIpO;
 
     QTimer          *_timer;
     QSettings       *_settings;

@@ -20,10 +20,27 @@ YaIpoCanny::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &img
 {
     qInfo() << this->objectName() << "process()";
     cv::Mat grayL, grayR;
+    //params
+    double   lowThresholdL  = 400;
+    double   ratioL         = 2.5;
+    int      kernelSizeL    = 5;
+
+    double   lowThresholdR  = 400;
+    double   ratioR         = 2.5;
+    int      kernelSizeR    = 5;
+
+
+
+    if (_p.contains("kernelSizeL")) {
+        kernelSizeL = _p.value("kernelSizeL").toInt();
+    }
+    if (_p.contains("kernelSizeR")) {
+        kernelSizeR = _p.value("kernelSizeR").toInt();
+    }
 
     cv::cvtColor(imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayL, imgOutL, 400, 1000, 5);
+    cv::Canny(grayL, imgOutL, lowThresholdL, lowThresholdL*ratioL, kernelSizeL);
 
     cv::cvtColor(imgR, grayR, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayR, imgOutR, 400, 1000, 7);
+    cv::Canny(grayR, imgOutR, lowThresholdR, lowThresholdR*ratioR, kernelSizeR);
 }

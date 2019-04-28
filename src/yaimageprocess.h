@@ -60,7 +60,7 @@ private:
     void  op4();
     void  op5();
     void  op6();
-    void  getImage(QImage &img,bool isLetf = true);
+    void  getImage(QImage &img, bool isLetf = true);
 
     YaStereoCam     *_cam;
     YaStereoTest    *_test;

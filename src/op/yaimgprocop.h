@@ -2,6 +2,7 @@
 #define YAIMGPROCOP_H
 
 #include <QObject>
+#include <QMap>
 #include <opencv2/core/base.hpp>
 
 class YaImgProcOp : public QObject
@@ -14,7 +15,11 @@ public:
 signals:
 
 public slots:
+    virtual void setParams(QMap<QString, QVariant> &params);
     virtual void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);
+
+protected:
+    QMap<QString, QVariant> _p;
 };
 
 #endif // YAIMGPROCOP_H

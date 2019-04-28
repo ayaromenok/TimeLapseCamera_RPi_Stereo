@@ -92,15 +92,11 @@ YaImageProcess::getImageL(QImage &img)
 void
 YaImageProcess::getImageR(QImage &img)
 {
-//    //qInfo() << __PRETTY_FUNCTION__;
-//    QImage qimg(_imgOutR->ptr(), _imgOutR->cols, _imgOutR->rows,
-//                _imgOutR->step, QImage::Format_RGB888);
-//    img = qimg;
     getImage(img, false);
 }
 
 void
-YaImageProcess::getImage(QImage &img,bool isLeft)
+YaImageProcess::getImage(QImage &img, bool isLeft)
 {
     //qInfo() << __PRETTY_FUNCTION__;
     int imgDepth = 0;
@@ -156,8 +152,6 @@ YaImageProcess::getImage(QImage &img,bool isLeft)
 void
 YaImageProcess::process()
 {
-//    qInfo() << __PRETTY_FUNCTION__;
-
     getImages();
 
     switch (op) {
@@ -199,7 +193,20 @@ YaImageProcess::op2()
 
 void
 YaImageProcess::op3()
-{    
+{
+    QMap<QString, QVariant> p;
+
+    p["lowThresholdL"] = 400;
+    p["ratioL"]        = 2.5;
+    p["kernelSizeL"]   = 5;
+
+    p["lowThresholdR"] = 400;
+    p["ratioR"]        = 2.0;
+    p["kernelSizeR"] = 5;
+
+    p["dumpParamsToCon"] = true;
+
+    _ipoCanny->setParams(p);
     _ipoCanny->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 

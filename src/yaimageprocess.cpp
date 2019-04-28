@@ -3,6 +3,7 @@
 #include "yastereotest.h"
 #include "op/yaimgprocop.h"
 #include "op/yaipocanny.h"
+#include "op/yaipochessboard.h"
 
 #include <QDebug>
 #include <QImage>
@@ -25,6 +26,7 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     countImgPtR = 0;
     srcTestChanged = true;
     _ipoCanny = new YaIpoCanny();
+    _ipoChBoard = new YaIpoChessBoard();
 }
 
 YaImageProcess::~YaImageProcess()
@@ -34,7 +36,9 @@ YaImageProcess::~YaImageProcess()
     delete _imgR;
     delete _imgOutL;
     delete _imgOutR;
+
     delete _ipoCanny;
+    delete _ipoChBoard;
 }
 
 void
@@ -203,30 +207,8 @@ YaImageProcess::op3()
 
 void
 YaImageProcess::op4()
-{
-    qInfo() << __PRETTY_FUNCTION__ << "Checked Board";
-    cv::Mat grayL, grayR;
-    cv::Mat outPointsL, outPointsR;
-
-    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
-
-    cv::cvtColor(*_imgL, *_imgOutL, cv::COLOR_BGR2RGB);
-    cv::cvtColor(*_imgR, *_imgOutR, cv::COLOR_BGR2RGB);
-
-    if (cv::findChessboardCorners(*_imgL, cv::Size(4,6), outPointsL))
-    {
-        cv::drawChessboardCorners(*_imgOutL, cv::Size(4,6), outPointsL, true);
-    } else {
-        qInfo() << "Left: can't find check board";
-    }
-
-    if (cv::findChessboardCorners(*_imgR, cv::Size(4,6), outPointsR))
-    {
-        cv::drawChessboardCorners(*_imgOutR, cv::Size(4,6), outPointsR, true);
-    } else {
-        qInfo() << "Right: can't find check board";
-    }
+{    
+    _ipoChBoard->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 
 void

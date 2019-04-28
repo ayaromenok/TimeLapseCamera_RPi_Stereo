@@ -14,6 +14,7 @@ SOURCES += \
         src/main.cpp \
         src/op/yaimgprocop.cpp \
         src/op/yaipocanny.cpp \
+        src/op/yaipochessboard.cpp \
         src/yaimageprocess.cpp \
         src/yastereocam.cpp \
         src/yastereotest.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 HEADERS += \
         src/op/yaimgprocop.h \
         src/op/yaipocanny.h \
+        src/op/yaipochessboard.h \
         src/yaimageprocess.h \
         src/yastereocam.h \
         src/yastereotest.h \

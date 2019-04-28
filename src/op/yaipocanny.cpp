@@ -6,13 +6,13 @@
 
 YaIpoCanny::YaIpoCanny()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Canny filter L/R");
 }
 
 YaIpoCanny::~YaIpoCanny()
 {
-    qDebug() << __PRETTY_FUNCTION__;
+    qInfo() << __PRETTY_FUNCTION__;
 }
 
 void

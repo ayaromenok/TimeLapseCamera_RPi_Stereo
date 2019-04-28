@@ -8,6 +8,7 @@ class YaStereoCam;
 class YaStereoTest;
 class YaImgProcOp;
 class YaIpoCanny;
+class YaIpoChessBoard;
 
 namespace cv {
     class Mat;
@@ -80,6 +81,7 @@ private:
     std::vector<std::vector<cv::Point2f>>   imgPtR;
 
     YaIpoCanny      *_ipoCanny;
+    YaIpoChessBoard *_ipoChBoard;
 };
 
 #endif // YAIMAGEPROCESS_H

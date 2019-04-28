@@ -1,5 +1,7 @@
 #include "yaimgprocop.h"
 #include <QDebug>
+#include <QVBoxLayout>
+#include <QLabel>
 
 YaImgProcOp::YaImgProcOp(QObject *parent) : QObject(parent)
 {
@@ -37,4 +39,13 @@ YaImgProcOp::dumpParamsToCon()
         i.next();
         qInfo() << i.key() << ": " << i.value();
     }
+}
+
+void
+YaImgProcOp::setCtrlIpoUI(QGroupBox &gb)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+
+    gb.setTitle("Ctrl/YaImgProcOp");
+//QStackedWidget/QStackedLayout or use QTabWidget
 }

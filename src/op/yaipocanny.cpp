@@ -1,6 +1,8 @@
 #include "yaipocanny.h"
 
 #include <QDebug>
+#include <QVBoxLayout>
+#include <QLabel>
 
 #include <opencv2/opencv.hpp>
 
@@ -45,4 +47,13 @@ YaIpoCanny::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &img
 
     cv::cvtColor(imgR, grayR, cv::COLOR_BGR2GRAY);
     cv::Canny(grayR, imgOutR, lowThresholdR, lowThresholdR*ratioR, kernelSizeR);
+}
+
+void
+YaIpoCanny::setCtrlIpoUI(QGroupBox &gb)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    gb.setTitle("Ctrl/YaIpoCanny");
+
+//QStackedWidget/QStackedLayout or use QTabWidget
 }

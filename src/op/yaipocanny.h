@@ -13,6 +13,7 @@ public:
 
 public slots:
    void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);
+   void setCtrlIpoUI(QGroupBox &gb);
 
 private:
 

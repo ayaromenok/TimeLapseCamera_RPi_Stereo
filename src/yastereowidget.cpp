@@ -176,6 +176,7 @@ YaStereoWidget::setUI()
 
     _gbCtrlIpO = new QGroupBox("Controls for IpO");
     _gbCtrlIpO->setGeometry(0,0, 100, 50);
+//QStackedWidget/QStackedLayout or use QTabWidget
     _loutCtrl->addWidget(_gbCtrlIpO);
 
     _lbCtrlImage = new QLabel("Place for Control Image");

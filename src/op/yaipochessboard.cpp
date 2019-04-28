@@ -1,6 +1,8 @@
 #include "yaipochessboard.h"
 
 #include <QDebug>
+#include <QVBoxLayout>
+#include <QLabel>
 
 #include <opencv2/opencv.hpp>
 
@@ -50,3 +52,12 @@ YaIpoChessBoard::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat
         qInfo() << "img/R: can't find check board";
     }
 }
+
+void
+YaIpoChessBoard::setCtrlIpoUI(QGroupBox &gb)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    gb.setTitle("Ctrl/YaIpoChessBoard");
+//QStackedWidget/QStackedLayout or use QTabWidget
+}
+

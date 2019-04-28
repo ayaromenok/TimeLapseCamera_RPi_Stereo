@@ -93,8 +93,10 @@ void
 YaStereoWidget::updateProcessOp(int index)
 {
     _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
+    _imp->process();
+    _imp->setCtrlIpoUI(*_gbCtrlIpO);
     _settings->setValue("UI/ProcessOp",index);
-    timerUpdate();
+    //timerUpdate();
 }
 
 void

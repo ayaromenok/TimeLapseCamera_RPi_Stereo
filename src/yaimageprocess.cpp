@@ -206,6 +206,7 @@ YaImageProcess::op3()
 
     p["dumpParamsToCon"] = false;
 
+    _ipo = _ipoCanny;
     _ipoCanny->setParams(p);
     _ipoCanny->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
@@ -220,6 +221,7 @@ YaImageProcess::op4()
     p["sizeYR"] = 6;
     p["dumpParamsToCon"] = false;
 
+    _ipo = _ipoChBoard;
     _ipoChBoard->setParams(p);
     _ipoChBoard->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
@@ -265,4 +267,12 @@ YaImageProcess::op6()
 {
     qInfo() << __PRETTY_FUNCTION__;
     qInfo() << "No Op6 for now";
+}
+
+void
+YaImageProcess::setCtrlIpoUI(QGroupBox &gb)
+{
+    qInfo() << __PRETTY_FUNCTION__;
+    //gb.setTitle("Ctrl/Sub");
+    _ipo->setCtrlIpoUI(gb);
 }

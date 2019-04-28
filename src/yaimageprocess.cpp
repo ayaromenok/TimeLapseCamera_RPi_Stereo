@@ -197,15 +197,8 @@ YaImageProcess::op2()
 
 void
 YaImageProcess::op3()
-{
-    qInfo() << __PRETTY_FUNCTION__ << "Canny filter";
-    cv::Mat grayL, grayR, cannyL, cannyR;
-
-    cv::cvtColor(*_imgL, grayL, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayL, *_imgOutL, 400, 1000, 5);
-
-    cv::cvtColor(*_imgR, grayR, cv::COLOR_BGR2GRAY);
-    cv::Canny(grayR, *_imgOutR, 400, 1000, 7);
+{    
+    _ipoCanny->process(*_imgL, *_imgR, *_imgOutL, *_imgOutR);
 }
 
 void
@@ -276,5 +269,5 @@ void
 YaImageProcess::op6()
 {
     qInfo() << __PRETTY_FUNCTION__;
-    _ipoCanny->process();
+    qInfo() << "No Op6 for now";
 }

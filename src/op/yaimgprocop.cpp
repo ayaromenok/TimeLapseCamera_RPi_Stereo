@@ -4,6 +4,7 @@
 YaImgProcOp::YaImgProcOp(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
+    setObjectName("YaImageProcess Operation");
 }
 
 YaImgProcOp::~YaImgProcOp()
@@ -12,7 +13,7 @@ YaImgProcOp::~YaImgProcOp()
 }
 
 void
-YaImgProcOp::process()
+YaImgProcOp::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR)
 {
-    qInfo() << __PRETTY_FUNCTION__;
+    qInfo() << objectName() << "process()";
 }

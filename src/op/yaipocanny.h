@@ -3,6 +3,8 @@
 
 #include "yaimgprocop.h"
 
+#include <opencv2/core/base.hpp>
+
 class YaIpoCanny : public YaImgProcOp
 {
 public:
@@ -10,7 +12,11 @@ public:
     ~YaIpoCanny();
 
 public slots:
-   void process();
+   void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);
+
+private:
+    cv::Mat    *_imgInL;
+    cv::Mat    *_imgOutR;
 };
 
 #endif // YAIPOCANNY_H

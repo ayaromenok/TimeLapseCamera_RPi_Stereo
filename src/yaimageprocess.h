@@ -80,6 +80,7 @@ private:
     quint32         countImgPtR;
     std::vector<std::vector<cv::Point2f>>   imgPtR;
 
+    YaImgProcOp     *_ipo;
     YaIpoCanny      *_ipoCanny;
     YaIpoChessBoard *_ipoChBoard;
 };

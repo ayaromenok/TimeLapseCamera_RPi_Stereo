@@ -4,7 +4,7 @@
 
 #include <opencv2/opencv.hpp>
 
-YaIpoCanny::YaIpoCanny()
+YaIpoCanny::YaIpoCanny(YaImgProcOp *parent) : YaImgProcOp(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Canny filter L/R");

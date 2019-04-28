@@ -8,7 +8,7 @@
 class YaIpoChessBoard : public YaImgProcOp
 {
 public:
-    YaIpoChessBoard();
+    YaIpoChessBoard(YaImgProcOp *parent = nullptr);
     ~YaIpoChessBoard();
 
 public slots:

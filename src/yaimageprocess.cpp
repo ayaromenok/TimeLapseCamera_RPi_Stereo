@@ -25,8 +25,9 @@ YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
     countImgPtL = 0;
     countImgPtR = 0;
     srcTestChanged = true;
-    _ipoCanny = new YaIpoCanny();
-    _ipoChBoard = new YaIpoChessBoard();
+    _ipo = new YaImgProcOp(this);
+    _ipoCanny = new YaIpoCanny(_ipo);
+    _ipoChBoard = new YaIpoChessBoard(_ipo);
 }
 
 YaImageProcess::~YaImageProcess()
@@ -36,9 +37,6 @@ YaImageProcess::~YaImageProcess()
     delete _imgR;
     delete _imgOutL;
     delete _imgOutR;
-
-    delete _ipoCanny;
-    delete _ipoChBoard;
 }
 
 void

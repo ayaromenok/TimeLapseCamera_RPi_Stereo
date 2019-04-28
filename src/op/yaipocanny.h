@@ -8,7 +8,7 @@
 class YaIpoCanny : public YaImgProcOp
 {
 public:
-    YaIpoCanny();
+    YaIpoCanny(YaImgProcOp *parent = nullptr);
     ~YaIpoCanny();
 
 public slots:

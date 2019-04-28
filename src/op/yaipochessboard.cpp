@@ -4,7 +4,7 @@
 
 #include <opencv2/opencv.hpp>
 
-YaIpoChessBoard::YaIpoChessBoard()
+YaIpoChessBoard::YaIpoChessBoard(YaImgProcOp *parent) : YaImgProcOp(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Chess Board detection L/R");

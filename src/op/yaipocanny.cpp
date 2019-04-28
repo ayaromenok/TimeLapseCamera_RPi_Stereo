@@ -20,23 +20,25 @@ YaIpoCanny::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &img
 {
     qInfo() << this->objectName() << "process()";
     cv::Mat grayL, grayR;
-    //params
-    double   lowThresholdL  = 400;
-    double   ratioL         = 2.5;
-    int      kernelSizeL    = 5;
 
-    double   lowThresholdR  = 400;
-    double   ratioR         = 2.5;
-    int      kernelSizeR    = 5;
+    double  lowThresholdL       = 400;
+    double  ratioL              = 2.5;
+    int     kernelSizeL         = 5;
+
+    double  lowThresholdR       = 400;
+    double  ratioR              = 2.5;
+    int     kernelSizeR         = 5;
 
 
+    if (_p.contains("lowThresholdL")) { lowThresholdL = _p.value("lowThresholdL").toDouble();}
+    if (_p.contains("lowThresholdR")) { lowThresholdR = _p.value("lowThresholdR").toDouble();}
 
-    if (_p.contains("kernelSizeL")) {
-        kernelSizeL = _p.value("kernelSizeL").toInt();
-    }
-    if (_p.contains("kernelSizeR")) {
-        kernelSizeR = _p.value("kernelSizeR").toInt();
-    }
+    if (_p.contains("ratioL")) { ratioL = _p.value("ratioL").toDouble();}
+    if (_p.contains("ratioR")) { ratioR = _p.value("ratioR").toDouble();}
+
+    if (_p.contains("kernelSizeL")) { kernelSizeL = _p.value("kernelSizeL").toInt();}
+    if (_p.contains("kernelSizeR")) { kernelSizeR = _p.value("kernelSizeR").toInt();}
+
 
     cv::cvtColor(imgL, grayL, cv::COLOR_BGR2GRAY);
     cv::Canny(grayL, imgOutL, lowThresholdL, lowThresholdL*ratioL, kernelSizeL);

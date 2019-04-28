@@ -28,3 +28,4 @@ YaImgProcOp::setParams(QMap<QString, QVariant> &params)
         }
     }
 }
+

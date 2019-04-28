@@ -200,9 +200,9 @@ YaImageProcess::op3()
     p["ratioL"]        = 2.5;
     p["kernelSizeL"]   = 5;
 
-    p["lowThresholdR"] = 400;
-    p["ratioR"]        = 2.0;
-    p["kernelSizeR"] = 5;
+    p["lowThresholdR"] = 200;
+    p["ratioR"]        = 10.0;
+    p["kernelSizeR"]   = 5;
 
     p["dumpParamsToCon"] = true;
 

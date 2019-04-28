@@ -10,7 +10,7 @@ public:
     ~YaIpoCanny();
 
 public slots:
-//    void process();
+   void process();
 };
 
 #endif // YAIPOCANNY_H

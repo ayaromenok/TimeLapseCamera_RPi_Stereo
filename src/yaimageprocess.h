@@ -2,6 +2,7 @@
 #define YAIMAGEPROCESS_H
 
 #include <QObject>
+#include <QStackedWidget>
 #include <opencv2/core.hpp>
 
 class YaStereoCam;
@@ -52,6 +53,7 @@ public slots:
     void getImageL(QImage &imgL);
     void getImageR(QImage &imgR);
     void process();
+    void setCtrlIpoUI(QStackedWidget &sw);
 
 private:
     void  op1();

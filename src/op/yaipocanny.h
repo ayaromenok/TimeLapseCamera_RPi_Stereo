@@ -15,7 +15,7 @@ public slots:
    void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);
 
 private:
-
+    void setupUI();
 };
 
 #endif // YAIPOCANNY_H

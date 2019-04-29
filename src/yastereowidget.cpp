@@ -93,8 +93,10 @@ void
 YaStereoWidget::updateProcessOp(int index)
 {
     _imp->setOpImage((YaImageProcess::OPERATION)(1<<index));
+    _imp->process();
+    _imp->setCtrlIpoUI(*_swCtrlIpO);
     _settings->setValue("UI/ProcessOp",index);
-    timerUpdate();
+    //timerUpdate();
 }
 
 void
@@ -171,6 +173,14 @@ YaStereoWidget::setUI()
           this, &YaStereoWidget::updateProcessOp);
     _cbCtrlProcessOp->setCurrentIndex(_settings->value("UI/ProcessOp").toInt());
     _loutCtrl->addWidget(_cbCtrlProcessOp);
+
+    _gbCtrlIpO = new QGroupBox("Controls for IpO");
+    _swCtrlIpO = new QStackedWidget();
+    _loutCtrlIpO = new QVBoxLayout();
+    _loutCtrlIpO->addWidget(_swCtrlIpO);
+    _gbCtrlIpO->setLayout(_loutCtrlIpO);
+//QStackedWidget/QStackedLayout or use QTabWidget
+    _loutCtrl->addWidget(_gbCtrlIpO);
 
     _lbCtrlImage = new QLabel("Place for Control Image");
     _loutCtrl->addWidget(_lbCtrlImage);

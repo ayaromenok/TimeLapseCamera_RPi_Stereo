@@ -11,7 +11,7 @@ class QImage;
 class QTimer;
 class QComboBox;
 class QSettings;
-
+class QStackedWidget;
 class YaImageProcess;
 
 class YaStereoWidget : public QWidget
@@ -55,6 +55,9 @@ private:
     QComboBox                   *_cbCtrlTimer;
     QComboBox                   *_cbCtrlProcessOp;
     QLabel                      *_lbCtrlImage;
+    QGroupBox                   *_gbCtrlIpO;
+    QVBoxLayout                 *_loutCtrlIpO;
+    QStackedWidget              *_swCtrlIpO;
 
     QTimer          *_timer;
     QSettings       *_settings;

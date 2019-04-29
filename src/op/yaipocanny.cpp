@@ -1,8 +1,7 @@
 #include "yaipocanny.h"
 
 #include <QDebug>
-#include <QVBoxLayout>
-#include <QLabel>
+#include <QtWidgets>
 
 #include <opencv2/opencv.hpp>
 
@@ -10,6 +9,11 @@ YaIpoCanny::YaIpoCanny(YaImgProcOp *parent) : YaImgProcOp(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Canny filter L/R");
+    _wdgCtrl = new QWidget;
+    QVBoxLayout *lout = new QVBoxLayout();
+    QLabel  *lb0 = new QLabel("Label Canny");
+    lout->addWidget(lb0);
+    _wdgCtrl->setLayout(lout);
 }
 
 YaIpoCanny::~YaIpoCanny()
@@ -49,11 +53,4 @@ YaIpoCanny::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &img
     cv::Canny(grayR, imgOutR, lowThresholdR, lowThresholdR*ratioR, kernelSizeR);
 }
 
-void
-YaIpoCanny::setCtrlIpoUI(QGroupBox &gb)
-{
-    qInfo() << __PRETTY_FUNCTION__;
-    gb.setTitle("Ctrl/YaIpoCanny");
 
-//QStackedWidget/QStackedLayout or use QTabWidget
-}

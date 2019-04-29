@@ -5,7 +5,8 @@
 #include <QMap>
 #include <QGroupBox>
 #include <opencv2/core/base.hpp>
-class QVBoxLayout;
+class QWidget;
+class QStackedWidget;
 
 class YaImgProcOp : public QObject
 {
@@ -19,11 +20,11 @@ signals:
 public slots:
     virtual void setParams(QMap<QString, QVariant> &params);
     virtual void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);    
-    virtual void setCtrlIpoUI(QGroupBox &gb);
+    virtual void setCtrlIpoUI(QStackedWidget &sw);
     void dumpParamsToCon();
 protected:
     QMap<QString, QVariant> _p;
-    QVBoxLayout             *_lout;
+    QWidget                *_wdgCtrl;
 };
 
 #endif // YAIMGPROCOP_H

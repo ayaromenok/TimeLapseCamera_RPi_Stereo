@@ -1,8 +1,7 @@
 #include "yaipochessboard.h"
 
 #include <QDebug>
-#include <QVBoxLayout>
-#include <QLabel>
+#include <QtWidgets>
 
 #include <opencv2/opencv.hpp>
 
@@ -10,6 +9,11 @@ YaIpoChessBoard::YaIpoChessBoard(YaImgProcOp *parent) : YaImgProcOp(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Chess Board detection L/R");
+    _wdgCtrl = new QWidget;
+    QVBoxLayout *lout = new QVBoxLayout();
+    QLabel  *lb0 = new QLabel("Label ChessBoard");
+    lout->addWidget(lb0);
+    _wdgCtrl->setLayout(lout);
 }
 
 YaIpoChessBoard::~YaIpoChessBoard()
@@ -53,11 +57,5 @@ YaIpoChessBoard::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat
     }
 }
 
-void
-YaIpoChessBoard::setCtrlIpoUI(QGroupBox &gb)
-{
-    qInfo() << __PRETTY_FUNCTION__;
-    gb.setTitle("Ctrl/YaIpoChessBoard");
-//QStackedWidget/QStackedLayout or use QTabWidget
-}
+
 

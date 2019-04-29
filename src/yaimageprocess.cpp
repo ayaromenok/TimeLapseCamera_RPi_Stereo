@@ -7,7 +7,7 @@
 
 #include <QDebug>
 #include <QImage>
-
+#include <QLabel>
 #include <opencv2/opencv.hpp>
 
 YaImageProcess::YaImageProcess(QObject *parent) : QObject(parent)
@@ -270,9 +270,8 @@ YaImageProcess::op6()
 }
 
 void
-YaImageProcess::setCtrlIpoUI(QGroupBox &gb)
+YaImageProcess::setCtrlIpoUI(QStackedWidget &sw)
 {
-    qInfo() << __PRETTY_FUNCTION__;
-    //gb.setTitle("Ctrl/Sub");
-    _ipo->setCtrlIpoUI(gb);
+    qInfo() << __PRETTY_FUNCTION__;    
+    _ipo->setCtrlIpoUI(sw);
 }

@@ -1,12 +1,16 @@
 #include "yaimgprocop.h"
 #include <QDebug>
-#include <QVBoxLayout>
-#include <QLabel>
+#include <QtWidgets>
 
 YaImgProcOp::YaImgProcOp(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("YaImageProcess Operation");
+    _wdgCtrl = new QWidget;
+    QVBoxLayout *lout = new QVBoxLayout();
+    QLabel  *lb0 = new QLabel("Label YaImgProcOp");
+    lout->addWidget(lb0);
+    _wdgCtrl->setLayout(lout);
 }
 
 YaImgProcOp::~YaImgProcOp()
@@ -42,10 +46,13 @@ YaImgProcOp::dumpParamsToCon()
 }
 
 void
-YaImgProcOp::setCtrlIpoUI(QGroupBox &gb)
+YaImgProcOp::setCtrlIpoUI(QStackedWidget &sw)
 {
     qInfo() << __PRETTY_FUNCTION__;
 
-    gb.setTitle("Ctrl/YaImgProcOp");
-//QStackedWidget/QStackedLayout or use QTabWidget
+    qInfo() << __PRETTY_FUNCTION__;
+    if(-1 == sw.indexOf(_wdgCtrl) ){
+       sw.addWidget(_wdgCtrl);
+    }
+    sw.setCurrentWidget(_wdgCtrl);
 }

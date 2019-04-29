@@ -9,11 +9,7 @@ YaIpoChessBoard::YaIpoChessBoard(YaImgProcOp *parent) : YaImgProcOp(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("Chess Board detection L/R");
-    _wdgCtrl = new QWidget;
-    QVBoxLayout *lout = new QVBoxLayout();
-    QLabel  *lb0 = new QLabel("Label ChessBoard");
-    lout->addWidget(lb0);
-    _wdgCtrl->setLayout(lout);
+    setupUI();
 }
 
 YaIpoChessBoard::~YaIpoChessBoard()
@@ -55,6 +51,44 @@ YaIpoChessBoard::process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat
     } else {
         qInfo() << "img/R: can't find check board";
     }
+}
+
+
+void
+YaIpoChessBoard::setupUI()
+{
+    _wdgCtrl = new QWidget;
+    QHBoxLayout *lout = new QHBoxLayout();
+    QGroupBox *gbLeft = new QGroupBox("Left image");
+    QGroupBox *gbRight = new QGroupBox("Right image");
+
+    QGridLayout *loutLeft = new QGridLayout();
+    QLabel  *lbLeft0 = new QLabel("X corners:");
+    QLineEdit *leLeft0 = new QLineEdit("4");
+    QLabel  *lbLeft1 = new QLabel("Y corners:");
+    QLineEdit *leLeft1 = new QLineEdit("6");
+    loutLeft->addWidget(lbLeft0,0,0);
+    loutLeft->addWidget(leLeft0,0,1);
+    loutLeft->addWidget(lbLeft1,1,0);
+    loutLeft->addWidget(leLeft1,1,1);
+    loutLeft->setRowStretch(2,10);
+    gbLeft->setLayout(loutLeft);
+
+    QGridLayout *loutRight = new QGridLayout();
+    QLabel  *lbRight0 = new QLabel("X corners:");
+    QLineEdit *leRight0 = new QLineEdit("4");
+    QLabel  *lbRight1 = new QLabel("Y corners:");
+    QLineEdit *leRight1 = new QLineEdit("6");
+    loutRight->addWidget(lbRight0,0,0);
+    loutRight->addWidget(leRight0,0,1);
+    loutRight->addWidget(lbRight1,1,0);
+    loutRight->addWidget(leRight1,1,1);
+    loutRight->setRowStretch(2,10);
+    gbRight->setLayout(loutRight);
+
+    lout->addWidget(gbLeft);
+    lout->addWidget(gbRight);
+    _wdgCtrl->setLayout(lout);
 }
 
 

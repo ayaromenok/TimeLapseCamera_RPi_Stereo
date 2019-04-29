@@ -81,7 +81,7 @@ YaIpoCanny::setupUI()
     QLineEdit *leRight1 = new QLineEdit("2.5");
     QLabel  *lbRight2 = new QLabel("kernel size:");
     QLineEdit *leRight2 = new QLineEdit("5");
-    loutRight->addWidget(lbRight0,0,0,Qt::AlignTop);
+    loutRight->addWidget(lbRight0,0,0);
     loutRight->addWidget(leRight0,0,1);
     loutRight->addWidget(lbRight1,1,0);
     loutRight->addWidget(leRight1,1,1);

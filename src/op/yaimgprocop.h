@@ -20,9 +20,10 @@ signals:
 public slots:
     virtual void setParams(QMap<QString, QVariant> &params);
     virtual void process(cv::Mat &imgL, cv::Mat &imgR, cv::Mat &imgOutL, cv::Mat &imgOutR);    
-    virtual void setCtrlIpoUI(QStackedWidget &sw);
+    void setCtrlIpoUI(QStackedWidget &sw);
     void dumpParamsToCon();
 protected:
+    virtual void setupUI();
     QMap<QString, QVariant> _p;
     QWidget                *_wdgCtrl;
 };

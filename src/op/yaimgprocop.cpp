@@ -6,11 +6,7 @@ YaImgProcOp::YaImgProcOp(QObject *parent) : QObject(parent)
 {
     qInfo() << __PRETTY_FUNCTION__;
     setObjectName("YaImageProcess Operation");
-    _wdgCtrl = new QWidget;
-    QVBoxLayout *lout = new QVBoxLayout();
-    QLabel  *lb0 = new QLabel("Label YaImgProcOp");
-    lout->addWidget(lb0);
-    _wdgCtrl->setLayout(lout);
+    setupUI();
 }
 
 YaImgProcOp::~YaImgProcOp()
@@ -49,10 +45,18 @@ void
 YaImgProcOp::setCtrlIpoUI(QStackedWidget &sw)
 {
     qInfo() << __PRETTY_FUNCTION__;
-
-    qInfo() << __PRETTY_FUNCTION__;
     if(-1 == sw.indexOf(_wdgCtrl) ){
        sw.addWidget(_wdgCtrl);
     }
     sw.setCurrentWidget(_wdgCtrl);
+}
+
+void
+YaImgProcOp::setupUI()
+{
+    _wdgCtrl = new QWidget;
+    QVBoxLayout *lout = new QVBoxLayout();
+    QLabel  *lb0 = new QLabel("Just a stub\nYou need to reimplement setupUI()");
+    lout->addWidget(lb0);
+    _wdgCtrl->setLayout(lout);
 }
